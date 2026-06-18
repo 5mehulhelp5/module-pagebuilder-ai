@@ -4,6 +4,15 @@ All notable changes to this extension are documented here. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.17]
+
+### Changed
+- Rewrote README to match gold-template structure: added Quick Answer block,
+  Who Is It For section, grouped Key Features, full Configuration table from
+  system.xml, How It Works walkthrough, expanded FAQ to 10 entries, updated
+  Support and Quick Links tables, corrected canonical URL to the live product
+  page, and added SEO meta comment block.
+
 ## [1.1.6]
 
 ### Added
