@@ -1,17 +1,6 @@
 <?php
-/**
- * Panth Module Knowledge Base - Batch 1
- *
- * AI training data for BannerSlider, MegaMenu, ProductSlider, Testimonials,
- * Faq, ProductAttachments, SmartBadge, and ProductGallery modules.
- *
- * @category  Panth
- * @package   Panth_AdvancedSEO
- */
 return [
-    // =========================================================================
-    // BANNER SLIDER (8 entries)
-    // =========================================================================
+
     [
         'category' => 'panth_modules',
         'subcategory' => 'banner_slider',
@@ -69,9 +58,6 @@ return [
         'tags' => 'banner,slider,content,overlay,html,cta',
     ],
 
-    // =========================================================================
-    // MEGA MENU (8 entries)
-    // =========================================================================
     [
         'category' => 'panth_modules',
         'subcategory' => 'mega_menu',
@@ -129,9 +115,6 @@ return [
         'tags' => 'megamenu,import,export,versioning,preview,admin',
     ],
 
-    // =========================================================================
-    // PRODUCT SLIDER (10 entries)
-    // =========================================================================
     [
         'category' => 'panth_modules',
         'subcategory' => 'product_slider',
@@ -203,9 +186,6 @@ return [
         'tags' => 'product,slider,seo,heading,accessibility,aria,structured-data',
     ],
 
-    // =========================================================================
-    // TESTIMONIALS (8 entries)
-    // =========================================================================
     [
         'category' => 'panth_modules',
         'subcategory' => 'testimonials',
@@ -263,9 +243,6 @@ return [
         'tags' => 'testimonials,seo,schema,meta,social-proof,trust',
     ],
 
-    // =========================================================================
-    // FAQ (10 entries)
-    // =========================================================================
     [
         'category' => 'panth_modules',
         'subcategory' => 'faq',
@@ -337,9 +314,6 @@ return [
         'tags' => 'faq,seo,schema,canonical,meta,rich-results',
     ],
 
-    // =========================================================================
-    // PRODUCT ATTACHMENTS (8 entries)
-    // =========================================================================
     [
         'category' => 'panth_modules',
         'subcategory' => 'product_attachments',
@@ -397,9 +371,6 @@ return [
         'tags' => 'attachments,seo,content-strategy,downloads,analytics,email',
     ],
 
-    // =========================================================================
-    // SMART BADGE (7 entries)
-    // =========================================================================
     [
         'category' => 'panth_modules',
         'subcategory' => 'smart_badge',
@@ -450,9 +421,6 @@ return [
         'tags' => 'badge,seo,conversion,urgency,promotion,tips',
     ],
 
-    // =========================================================================
-    // PRODUCT GALLERY (7 entries)
-    // =========================================================================
     [
         'category' => 'panth_modules',
         'subcategory' => 'product_gallery',
@@ -503,9 +471,6 @@ return [
         'tags' => 'gallery,seo,alt-text,image-optimization,performance,responsive',
     ],
 
-    // =========================================================================
-    // CROSS-MODULE ENTRIES (5 entries)
-    // =========================================================================
     [
         'category' => 'panth_modules',
         'subcategory' => 'cross_module',

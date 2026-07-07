@@ -5,11 +5,6 @@ namespace Panth\PageBuilderAi\Plugin\ThirdParty;
 
 use Panth\PageBuilderAi\Model\Admin\AiButtonRenderer;
 
-/**
- * Adds AI generate buttons to the FAQ Item edit form.
- *
- * Targets: Panth\Faq\Model\Item\DataProvider (afterGetMeta).
- */
 class FaqItemAiPlugin
 {
     public function __construct(
@@ -17,11 +12,6 @@ class FaqItemAiPlugin
     ) {
     }
 
-    /**
-     * @param mixed               $subject
-     * @param array<string,mixed> $result
-     * @return array<string,mixed>
-     */
     public function afterGetMeta($subject, array $result): array
     {
         if (!class_exists(\Panth\Faq\Model\Item::class, false)

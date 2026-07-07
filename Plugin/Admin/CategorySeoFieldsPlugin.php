@@ -9,13 +9,6 @@ use Magento\Framework\App\ResourceConnection;
 use Panth\PageBuilderAi\Helper\Config as SeoConfig;
 use Panth\PageBuilderAi\Model\Config\Source\MetaRobots;
 
-/**
- * Adds meta_robots (select) and exclude_from_sitemap (toggle) fields to the
- * category edit form's "search_engine_optimization" fieldset.
- *
- * Both fields map to EAV attributes (`meta_robots` and `in_xml_sitemap`),
- * so Magento persists them automatically on category save.
- */
 class CategorySeoFieldsPlugin
 {
     public function __construct(
@@ -26,29 +19,17 @@ class CategorySeoFieldsPlugin
     ) {
     }
 
-    /**
-     * Inject SEO fields into the category form meta.
-     *
-     * @param CategoryDataProvider  $subject
-     * @param array<string, mixed>  $result
-     * @return array<string, mixed>
-     */
     public function afterGetMeta(CategoryDataProvider $subject, array $result): array
     {
         if (!$this->seoConfig->isEnabled()) {
             return $result;
         }
 
-        /*
-         * Magento category form uses "search_engine_optimization" (underscores)
-         * while the product form uses "search-engine-optimization" (hyphens).
-         */
         $seoGroupKey = 'search_engine_optimization';
         if (!isset($result[$seoGroupKey])) {
             $seoGroupKey = 'search-engine-optimization';
         }
 
-        // -- Meta Robots select --
         $result[$seoGroupKey]['children']['meta_robots'] = [
             'arguments' => [
                 'data' => [
@@ -65,7 +46,6 @@ class CategorySeoFieldsPlugin
             ],
         ];
 
-        // -- OG Title --
         $result[$seoGroupKey]['children']['og_title'] = [
             'arguments' => [
                 'data' => [
@@ -82,7 +62,6 @@ class CategorySeoFieldsPlugin
             ],
         ];
 
-        // -- OG Description --
         $result[$seoGroupKey]['children']['og_description'] = [
             'arguments' => [
                 'data' => [
@@ -99,7 +78,6 @@ class CategorySeoFieldsPlugin
             ],
         ];
 
-        // -- OG Image URL --
         $result[$seoGroupKey]['children']['og_image'] = [
             'arguments' => [
                 'data' => [
@@ -116,7 +94,6 @@ class CategorySeoFieldsPlugin
             ],
         ];
 
-        // -- Exclude from Sitemap toggle --
         $result[$seoGroupKey]['children']['exclude_from_sitemap'] = [
             'arguments' => [
                 'data' => [
@@ -142,7 +119,6 @@ class CategorySeoFieldsPlugin
             ],
         ];
 
-        // -- AI Generate Meta button --
         if ($this->seoConfig->isEnabled() && $this->seoConfig->hasOwnApiKey()) {
             $generateUrl = $this->backendUrl->getUrl('panth_pagebuilderai/generate/index');
             $result[$seoGroupKey]['children']['ai_generate_container'] = [
@@ -163,9 +139,6 @@ class CategorySeoFieldsPlugin
         return $result;
     }
 
-    /**
-     * Load saved prompts for dropdown.
-     */
     private function loadPrompts(string $entityType): array
     {
         try {
@@ -187,10 +160,6 @@ class CategorySeoFieldsPlugin
         }
     }
 
-    /**
-     * Build inline HTML + JS for the AI Generate button with prompt selector
-     * and per-field AI generation buttons (category form).
-     */
     private function buildAiButtonHtml(string $generateUrl, string $entityType): string
     {
         $fieldMap = [

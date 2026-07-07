@@ -13,9 +13,6 @@ class Collection extends AbstractCollection implements SearchResultInterface
 {
     protected $_idFieldName = 'job_id';
 
-    /**
-     * @var \Magento\Framework\Api\Search\AggregationInterface|null
-     */
     private $aggregations;
 
     protected function _construct(): void

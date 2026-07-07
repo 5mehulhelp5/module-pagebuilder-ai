@@ -43,9 +43,6 @@ class AiSettings extends Template
         return $this->getUrl('panth_pagebuilderai/aisettings/approveBatch');
     }
 
-    /**
-     * @return array<int, array{value: int, label: string}>
-     */
     public function getStoreOptions(): array
     {
         $options = [['value' => 0, 'label' => (string) __('All Store Views')]];
@@ -58,9 +55,6 @@ class AiSettings extends Template
         return $options;
     }
 
-    /**
-     * @return array<string, int>
-     */
     public function getJobCounts(): array
     {
         try {

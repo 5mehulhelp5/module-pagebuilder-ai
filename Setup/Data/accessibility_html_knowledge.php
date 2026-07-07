@@ -1,19 +1,8 @@
 <?php
 declare(strict_types=1);
 
-/**
- * AI Knowledge Base: Web Accessibility (WCAG 2.2) & HTML/CSS Patterns
- *
- * Returns array of entries for panth_seo_ai_knowledge table.
- * Each entry: category, subcategory, title, content, tags, is_active, sort_order
- */
-
 $entries = [];
-$sort = 1000; // offset to avoid collision with existing entries
-
-// =====================================================================
-// CATEGORY: accessibility - WCAG 2.2 Compliance (15 entries)
-// =====================================================================
+$sort = 1000;
 
 $entries[] = [
     'category' => 'accessibility',
@@ -164,10 +153,6 @@ $entries[] = [
     'is_active' => 1,
     'sort_order' => $sort++,
 ];
-
-// =====================================================================
-// CATEGORY: html_patterns - HTML Content Patterns (20 entries)
-// =====================================================================
 
 $entries[] = [
     'category' => 'html_patterns',
@@ -369,10 +354,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =====================================================================
-// CATEGORY: html_patterns - CSS Best Practices for SEO (10 entries)
-// =====================================================================
-
 $entries[] = [
     'category' => 'html_patterns',
     'subcategory' => 'css_mobile_first',
@@ -472,10 +453,6 @@ $entries[] = [
     'is_active' => 1,
     'sort_order' => $sort++,
 ];
-
-// =====================================================================
-// CATEGORY: html_patterns - Rich Content Patterns (8 entries)
-// =====================================================================
 
 $entries[] = [
     'category' => 'html_patterns',

@@ -9,13 +9,6 @@ use Magento\Framework\App\ResourceConnection;
 use Panth\PageBuilderAi\Helper\Config as SeoConfig;
 use Panth\PageBuilderAi\Model\Config\Source\MetaRobots;
 
-/**
- * Adds meta_robots (select) and hreflang_identifier (text) fields to the
- * CMS page edit form.
- *
- * CMS pages do not use EAV, so both values are stored in the
- * `panth_seo_override` table keyed by entity_type = 'cms_page'.
- */
 class CmsPageSeoFieldsPlugin
 {
     private const OVERRIDE_TABLE = 'panth_seo_override';
@@ -29,13 +22,6 @@ class CmsPageSeoFieldsPlugin
     ) {
     }
 
-    /**
-     * Inject SEO fields into the CMS page form meta.
-     *
-     * @param CmsPageDataProvider   $subject
-     * @param array<string, mixed>  $result
-     * @return array<string, mixed>
-     */
     public function afterGetMeta(CmsPageDataProvider $subject, array $result): array
     {
         if (!$this->seoConfig->isEnabled()) {
@@ -91,11 +77,9 @@ class CmsPageSeoFieldsPlugin
             ],
         ];
 
-        // -- AI Generate Content button (in Content section) --
         if ($this->seoConfig->isEnabled() && $this->seoConfig->hasOwnApiKey()) {
             $generateUrl = $this->backendUrl->getUrl('panth_pagebuilderai/generate/index');
 
-            // Add AI button to Content section for page content generation
             if (isset($result['content'])) {
                 $result['content']['children']['ai_content_container'] = [
                     'arguments' => [
@@ -115,7 +99,6 @@ class CmsPageSeoFieldsPlugin
                 ];
             }
 
-            // AI Generate Meta button (in SEO section)
             $result['search_engine_optimisation']['children']['ai_generate_container'] = [
                 'arguments' => [
                     'data' => [
@@ -134,9 +117,6 @@ class CmsPageSeoFieldsPlugin
         return $result;
     }
 
-    /**
-     * Load saved prompts for dropdown.
-     */
     private function loadPrompts(string $entityType): array
     {
         try {
@@ -158,10 +138,6 @@ class CmsPageSeoFieldsPlugin
         }
     }
 
-    /**
-     * Build inline HTML + JS for the AI Generate button with prompt selector
-     * and per-field AI generation buttons (CMS page form).
-     */
     private function buildAiButtonHtml(string $generateUrl, string $entityType): string
     {
         $fieldMap = [
@@ -572,13 +548,6 @@ setTimeout(function() {
 HTML;
     }
 
-    /**
-     * Pre-fill meta_robots and hreflang_identifier from the override table.
-     *
-     * @param CmsPageDataProvider   $subject
-     * @param array<string, mixed>  $result
-     * @return array<string, mixed>
-     */
     public function afterGetData(CmsPageDataProvider $subject, array $result): array
     {
         if (!$this->seoConfig->isEnabled()) {
@@ -617,18 +586,11 @@ HTML;
         return $result;
     }
 
-    /**
-     * Load an existing override row for the CMS page.
-     *
-     * @return array<string, mixed>|null
-     */
     private function loadOverride(int $entityId, int $storeId): ?array
     {
         $connection = $this->resource->getConnection();
         $table      = $this->resource->getTableName(self::OVERRIDE_TABLE);
 
-        // The overrides table is provided by Panth_AdvancedSEO. If that module isn't
-        // installed the table won't exist — silently skip rather than fatal.
         if (!$connection->isTableExists($table)) {
             return null;
         }

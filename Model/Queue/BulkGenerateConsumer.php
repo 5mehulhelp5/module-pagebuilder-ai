@@ -12,11 +12,6 @@ use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Psr\Log\LoggerInterface;
 
-/**
- * Queue consumer for topic `panth_pagebuilderai.generate_meta`.
- *
- * Message payload: JSON { "job_id": int }.
- */
 class BulkGenerateConsumer
 {
     public function __construct(

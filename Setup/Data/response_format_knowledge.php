@@ -1,21 +1,5 @@
 <?php
-/**
- * Panth AdvancedSEO - AI Response Format Knowledge Base
- *
- * Training data that teaches the AI HOW to format its responses for different
- * Magento entity fields. Each entry provides exact formatting rules, character
- * limits, structural templates, and concrete examples showing the JSON output
- * the AI should return for each field type.
- *
- * @category  Panth
- * @package   Panth_AdvancedSEO
- */
-
 return [
-
-    // =========================================================================
-    // PRODUCT NAME FORMATTING (5 entries)
-    // =========================================================================
 
     [
         'category'    => 'response_format',
@@ -57,10 +41,6 @@ return [
         'tags'        => ['product-name', 'examples', 'good-vs-bad', 'best-practices', 'formatting'],
     ],
 
-    // =========================================================================
-    // META TITLE FORMATTING (5 entries)
-    // =========================================================================
-
     [
         'category'    => 'response_format',
         'subcategory' => 'meta_title',
@@ -101,10 +81,6 @@ return [
         'tags'        => ['meta-title', 'examples', 'industry', 'fashion', 'electronics', 'beauty'],
     ],
 
-    // =========================================================================
-    // META DESCRIPTION FORMATTING (5 entries)
-    // =========================================================================
-
     [
         'category'    => 'response_format',
         'subcategory' => 'meta_description',
@@ -144,10 +120,6 @@ return [
         'content'     => 'The AI should vary its meta description format based on entity type. Product page: {"meta_description": "The Dyson V15 Detect reveals hidden dust with a laser and auto-adjusts suction power. 60-minute runtime on a full charge. Shop with free delivery."} — specific, feature-focused, single product. Category page: {"meta_description": "Shop 200+ wireless headphones from Sony, Bose, Apple and more. Compare prices, read reviews, and enjoy free shipping on orders over $49 at AudioShop."} — emphasizes selection breadth, multiple brands, comparison shopping. CMS About page: {"meta_description": "AudioShop has been the trusted destination for premium audio equipment since 2005. Expert staff, 30-day returns, and price match guarantee."} — trust, credentials, policies. CMS FAQ page: {"meta_description": "Find answers to common questions about shipping, returns, warranty, and order tracking at AudioShop. Contact our support team for help."} — practical, covers multiple query intents. Landing/promotional page: {"meta_description": "Black Friday deals on headphones, speakers, and turntables. Up to 50% off top brands. Sale ends Monday — shop early for best selection at AudioShop."} — urgency, discount range, time-bound. Each format prioritizes what matters most for that page type.',
         'tags'        => ['meta-description', 'examples', 'product', 'category', 'cms', 'entity-type'],
     ],
-
-    // =========================================================================
-    // PRODUCT DESCRIPTION (HTML) FORMATTING (10 entries)
-    // =========================================================================
 
     [
         'category'    => 'response_format',
@@ -229,10 +201,6 @@ return [
         'tags'        => ['description', 'schema', 'structured-data', 'json-ld', 'product-schema', 'seo'],
     ],
 
-    // =========================================================================
-    // SHORT DESCRIPTION FORMATTING (3 entries)
-    // =========================================================================
-
     [
         'category'    => 'response_format',
         'subcategory' => 'short_description',
@@ -256,10 +224,6 @@ return [
         'content'     => 'The short description and meta description serve different audiences and contexts — the AI must generate distinct content for each even though both are brief. The meta description is for search engine result pages: it needs to include the primary keyword early, a USP, and a CTA that encourages the click. The short description is for on-site visitors who are already on the product page or browsing a category: it needs to convey the product\'s core benefit and spark interest in reading the full description. Duplication causes two problems: (1) Google may see the repeated text as thin content. (2) On-site, the visitor sees the same text twice if the meta description appears in internal search results and the short description on the product page. Example of properly differentiated content: {"meta_description": "Buy the Dyson V15 Detect cordless vacuum with laser dust detection. Free shipping and 2-year warranty at CleanHome.", "short_description": "Reveals hidden dust with a built-in laser and automatically adjusts suction power across different floor types. 60-minute runtime on a single charge."} — the meta description has "Buy," "Free shipping," and store name (SERP elements). The short description focuses on product capability (on-site element). The AI should generate both in a single response when both fields are requested, ensuring no sentence overlap.',
         'tags'        => ['short-description', 'meta-description', 'duplication', 'unique-content', 'differentiation'],
     ],
-
-    // =========================================================================
-    // META KEYWORDS FORMATTING (3 entries)
-    // =========================================================================
 
     [
         'category'    => 'response_format',
@@ -285,10 +249,6 @@ return [
         'tags'        => ['meta-keywords', 'brand', 'product-type', 'use-case', 'search-coverage'],
     ],
 
-    // =========================================================================
-    // OG TITLE / OG DESCRIPTION FORMATTING (3 entries)
-    // =========================================================================
-
     [
         'category'    => 'response_format',
         'subcategory' => 'og_title',
@@ -313,10 +273,6 @@ return [
         'tags'        => ['og-title', 'og-description', 'social-sharing', 'emotional-hooks', 'language'],
     ],
 
-    // =========================================================================
-    // CATEGORY DESCRIPTION FORMATTING (3 entries)
-    // =========================================================================
-
     [
         'category'    => 'response_format',
         'subcategory' => 'category_description',
@@ -340,10 +296,6 @@ return [
         'content'     => 'Mentioning the size and variety of the product selection in category descriptions provides social proof and sets expectations. Shoppers are more likely to browse a category that promises breadth. Use specific numbers when available: "Choose from over 150 wireless headphones" is more convincing than "Browse our wide selection." Mention the number of brands: "Featuring 25+ trusted brands including Sony, Bose, Jabra, and Sennheiser." Reference the price range to signal inclusivity: "With options from $29 to $549, there is a perfect pair for every budget." Highlight variety in product types: "From compact true wireless earbuds to studio-grade over-ear monitors, our collection covers every use case." If the exact product count is available as dynamic data, the AI can use a Magento directive or note it as a placeholder: "Choose from over {{count}} products" or note "[INSERT PRODUCT COUNT]" for the admin to update. Response: {"description": "<p>Explore over 200 wireless headphones from 30+ brands including Sony, Bose, Apple, and Sennheiser. Our collection spans true wireless earbuds, on-ear models, and over-ear headphones from $29 to $549.</p><p>Every pair includes free shipping, easy 60-day returns, and our price match guarantee. Filter by battery life, noise cancellation level, or connectivity to find exactly what you need.</p>"} — count, brand variety, price range, and product type breadth are all present.',
         'tags'        => ['category-description', 'product-count', 'variety', 'selection', 'social-proof'],
     ],
-
-    // =========================================================================
-    // CMS PAGE CONTENT FORMATTING (5 entries)
-    // =========================================================================
 
     [
         'category'    => 'response_format',

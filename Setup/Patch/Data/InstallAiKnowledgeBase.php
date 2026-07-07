@@ -8,12 +8,6 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 
-/**
- * Seeds the panth_seo_ai_knowledge table from the batch data files under Setup/Data/.
- *
- * Idempotent: entries are keyed by (title, category). Existing rows are
- * preserved untouched so administrators can safely edit seeded content.
- */
 class InstallAiKnowledgeBase implements DataPatchInterface
 {
     private const BATCH_FILES = [
@@ -54,7 +48,6 @@ class InstallAiKnowledgeBase implements DataPatchInterface
         $table = $this->resource->getTableName('panth_seo_ai_knowledge');
 
         if (!$connection->isTableExists($table)) {
-            // Table is managed via db_schema.xml — abort patch until schema is applied.
             $this->moduleDataSetup->endSetup();
             return $this;
         }
@@ -68,7 +61,7 @@ class InstallAiKnowledgeBase implements DataPatchInterface
             if (!file_exists($path)) {
                 continue;
             }
-            $batchEntries = include $path; // phpcs:ignore Magento2.Security.IncludeFile
+            $batchEntries = include $path;
             if (is_array($batchEntries)) {
                 $allEntries = array_merge($allEntries, $batchEntries);
             }
@@ -111,7 +104,6 @@ class InstallAiKnowledgeBase implements DataPatchInterface
             try {
                 $connection->insert($table, $row);
             } catch (\Throwable) {
-                // Skip on error
             }
         }
 

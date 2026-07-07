@@ -11,20 +11,6 @@ use Magento\Framework\Stdlib\DateTime\DateTime;
 use Panth\PageBuilderAi\Helper\Config as AiConfig;
 use Psr\Log\LoggerInterface;
 
-/**
- * Append-only audit logger for AI generation requests / responses.
- *
- * One row per call. Full prompt + response are persisted so the admin can
- * replay, debug, or investigate what went to the provider — but the column
- * type is `mediumtext`, bounding each entry to ~16 MB which is already far
- * more than any sane LLM call would ever need.
- *
- * Uploaded images are decoded from base64 and written to the media
- * filesystem under `pub/media/panth_pagebuilderai/request-log/<bucket>/`,
- * with only the relative media paths persisted in `images_json`. This keeps
- * DB rows small and lets the admin view render real thumbnails via the
- * normal media URL.
- */
 class RequestLogger
 {
     private const TABLE = 'panth_pagebuilderai_request_log';
@@ -40,24 +26,6 @@ class RequestLogger
     ) {
     }
 
-    /**
-     * @param array{
-     *     entity_type?: string|null,
-     *     entity_id?: int|null,
-     *     store_id?: int|null,
-     *     target_field?: string|null,
-     *     output_format?: string|null,
-     *     prompt?: string,
-     *     images?: array<int, string>,
-     *     image_count?: int,
-     *     success?: bool,
-     *     response?: string,
-     *     error_message?: string|null,
-     *     tokens_used?: int|null,
-     *     latency_ms?: int|null,
-     *     http_status?: string|null
-     * } $data
-     */
     public function record(array $data): void
     {
         try {
@@ -71,14 +39,9 @@ class RequestLogger
             $prompt   = (string) ($data['prompt'] ?? '');
             $response = (string) ($data['response'] ?? '');
 
-            // Guard against runaway payloads. mediumtext caps at ~16 MB; we trim
-            // at 1 MB to keep the admin grid responsive on long-tail entries.
             $promptStored   = mb_substr($prompt, 0, 1_000_000);
             $responseStored = mb_substr($response, 0, 1_000_000);
 
-            // Write uploaded images to pub/media and store only the relative
-            // paths in the DB. Failures here must not block the log insert —
-            // if image persistence fails we still record the rest of the row.
             $imagePaths = $this->persistImages((array) ($data['images'] ?? []));
             $imagesJson = !empty($imagePaths) ? json_encode($imagePaths) : null;
 
@@ -89,7 +52,6 @@ class RequestLogger
                     $adminUser = (string) ($user->getUsername() ?: $user->getData('username') ?: '');
                 }
             } catch (\Throwable) {
-                // admin session unavailable (e.g. CLI call) — leave blank
             }
 
             $provider = $this->config->getProvider();
@@ -122,21 +84,10 @@ class RequestLogger
                 'created_at'      => $this->dateTime->gmtDate(),
             ]);
         } catch (\Throwable $e) {
-            // Logging MUST NOT break the AI request flow. Drop the log on failure.
             $this->logger->warning('[Panth PageBuilderAi] request log insert failed: ' . $e->getMessage());
         }
     }
 
-    /**
-     * Decode up to five incoming base64 images and write them to pub/media.
-     *
-     * Accepted input per entry: either a raw base64 payload, or a
-     * `data:image/<ext>;base64,<payload>` data URI, or an already-resolved URL
-     * (http/https or a media-relative path) which is stored as-is.
-     *
-     * @param array<int, mixed> $images
-     * @return array<int, string> Relative media paths or pass-through URLs.
-     */
     private function persistImages(array $images): array
     {
         $images = array_slice($images, 0, 5);
@@ -151,8 +102,6 @@ class RequestLogger
             return [];
         }
 
-        // One bucket per log row keeps files grouped together; the microtime
-        // component avoids collisions across concurrent calls.
         $bucket = date('Ymd_His') . '_' . substr(str_replace('.', '', (string) microtime(true)), -6)
             . '_' . bin2hex(random_bytes(3));
         $relDir = self::MEDIA_SUBPATH . '/' . $bucket;
@@ -164,7 +113,6 @@ class RequestLogger
                 continue;
             }
 
-            // Already a URL/path — store as-is, nothing to decode.
             if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')
                 || (!str_starts_with($img, 'data:') && !$this->looksLikeBase64($img))) {
                 $stored[] = $img;

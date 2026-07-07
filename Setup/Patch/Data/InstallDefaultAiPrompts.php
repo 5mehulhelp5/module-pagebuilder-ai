@@ -6,13 +6,6 @@ namespace Panth\PageBuilderAi\Setup\Patch\Data;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 
-/**
- * Seeds default AI prompt templates for product, category, CMS page and PageBuilder generation.
- *
- * Idempotent: each prompt is keyed by its unique `name` column, and a SELECT is performed
- * before INSERT so re-running setup:upgrade will never create duplicates. Rows that were
- * edited by an administrator are left untouched.
- */
 class InstallDefaultAiPrompts implements DataPatchInterface
 {
     public function __construct(
@@ -47,9 +40,6 @@ class InstallDefaultAiPrompts implements DataPatchInterface
         return $this;
     }
 
-    /**
-     * @return array<int, array<string, mixed>>
-     */
     private function getDefaultPrompts(): array
     {
         return [

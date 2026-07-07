@@ -5,11 +5,6 @@ namespace Panth\PageBuilderAi\Plugin\ThirdParty;
 
 use Panth\PageBuilderAi\Model\Admin\AiButtonRenderer;
 
-/**
- * Adds AI generate buttons to the DynamicForms Form edit page.
- *
- * Targets: Panth\DynamicForms\Ui\DataProvider\FormDataProvider (afterGetMeta).
- */
 class DynamicFormAiPlugin
 {
     public function __construct(
@@ -17,11 +12,6 @@ class DynamicFormAiPlugin
     ) {
     }
 
-    /**
-     * @param mixed               $subject
-     * @param array<string,mixed> $result
-     * @return array<string,mixed>
-     */
     public function afterGetMeta($subject, array $result): array
     {
         if (!class_exists(\Panth\DynamicForms\Model\Form::class, false)

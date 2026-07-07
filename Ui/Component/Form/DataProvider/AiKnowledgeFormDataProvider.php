@@ -8,9 +8,6 @@ use Panth\PageBuilderAi\Model\ResourceModel\AiKnowledge\CollectionFactory;
 
 class AiKnowledgeFormDataProvider extends AbstractDataProvider
 {
-    /**
-     * @var array<int,array<string,mixed>>|null
-     */
     private ?array $loadedData = null;
 
     public function __construct(

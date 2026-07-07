@@ -7,15 +7,6 @@ use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\Patch\SchemaPatchInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 
-/**
- * Creates the panth_seo_ai_prompt table and adds prompt_id column
- * to panth_seo_generation_job via direct SQL.
- *
- * Kept as a setup-patch (in addition to db_schema.xml) so installations that
- * originally had the table created by AdvancedSEO's patch will register this
- * patch as already applied, and fresh installations will still create the
- * schema via db_schema.xml — this is a no-op safety net.
- */
 class AddAiPromptTable implements SchemaPatchInterface
 {
     public const TABLE = 'panth_seo_ai_prompt';

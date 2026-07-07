@@ -15,18 +15,6 @@ class AiService
     ) {
     }
 
-    /**
-     * Generate content using the configured AI provider.
-     *
-     * @param string $prompt
-     * @param array $images Base64-encoded images (optional)
-     * @param array<string, mixed> $logContext Optional caller metadata forwarded
-     *        verbatim into the audit log row (entity_type, entity_id, store_id,
-     *        target_field, output_format). Used by Controller/Adminhtml/Generate
-     *        to annotate the log entry, but no caller is required to pass it —
-     *        the row is still written, just without entity context.
-     * @return array{success: bool, content: string, message?: string}
-     */
     public function generate(string $prompt, array $images = [], array $logContext = []): array
     {
         $provider = $this->config->getProvider();
@@ -47,9 +35,6 @@ class AiService
             $result = ['success' => false, 'content' => '', 'message' => 'AI generation failed. Check system logs.'];
         }
 
-        // Always log — every single prompt/response pair is persisted, regardless
-        // of which caller invoked generate(). If the logger itself fails it
-        // swallows the exception so the AI response still reaches the user.
         $this->requestLogger->record(($logContext ?? []) + [
             'prompt'        => $prompt,
             'images'        => $images,
@@ -186,12 +171,8 @@ class AiService
         return ['success' => true, 'content' => trim($text), 'tokens_used' => $tokens];
     }
 
-    /**
-     * @return array{status: int, body: string}
-     */
     private function curlPost(string $url, array $headers, array $payload): array
     {
-        // SSRF prevention: only allow known AI API hosts
         $host = parse_url($url, PHP_URL_HOST);
         $allowed = ['api.openai.com', 'api.anthropic.com'];
         if (!in_array($host, $allowed, true)) {

@@ -5,9 +5,6 @@ namespace Panth\PageBuilderAi\Model\Generator;
 
 use Panth\PageBuilderAi\Api\AiGeneratorInterface;
 
-/**
- * OpenAI content generator.
- */
 class OpenAiAdapter extends AbstractHttpAdapter implements AiGeneratorInterface
 {
     public function getProvider(): string
@@ -19,10 +16,6 @@ class OpenAiAdapter extends AbstractHttpAdapter implements AiGeneratorInterface
     private const PROVIDER = 'openai';
     private const DEFAULT_MAX_TOKENS = 600;
 
-    /**
-     * @param array<string,mixed> $context
-     * @return array<string,mixed>
-     */
     public function generate(array $context, array $fields = [], array $options = []): array
     {
         $apiKey = $this->getApiKey('panth_pagebuilderai/ai/openai_api_key');

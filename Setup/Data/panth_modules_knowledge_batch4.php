@@ -1,20 +1,8 @@
 <?php
-/**
- * Panth AdvancedSEO - AI Knowledge Base Batch 4
- *
- * Infrastructure and Performance modules: Core, CoreWebVitals, CacheManager,
- * ImageOptimizer, PerformanceOptimizer, MalwareScanner, NotFoundPage.
- *
- * Returns an array of knowledge entries for panth_seo_ai_knowledge table.
- */
 declare(strict_types=1);
 
 $sort = 0;
 $entries = [];
-
-// =========================================================================
-// MODULE: Panth_Core - Core Settings & Theme Validation
-// =========================================================================
 
 $entries[] = [
     'category' => 'panth_infrastructure',
@@ -55,10 +43,6 @@ $entries[] = [
     'is_active' => 1,
     'sort_order' => $sort++,
 ];
-
-// =========================================================================
-// MODULE: Panth_CoreWebVitals - Performance Monitoring
-// =========================================================================
 
 $entries[] = [
     'category' => 'panth_infrastructure',
@@ -110,10 +94,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =========================================================================
-// MODULE: Panth_CacheManager - Cache Warming & Smart Invalidation
-// =========================================================================
-
 $entries[] = [
     'category' => 'panth_infrastructure',
     'subcategory' => 'cache_manager',
@@ -153,10 +133,6 @@ $entries[] = [
     'is_active' => 1,
     'sort_order' => $sort++,
 ];
-
-// =========================================================================
-// MODULE: Panth_ImageOptimizer - Image Optimization
-// =========================================================================
 
 $entries[] = [
     'category' => 'panth_infrastructure',
@@ -208,10 +184,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =========================================================================
-// MODULE: Panth_PerformanceOptimizer - JS/CSS Optimization
-// =========================================================================
-
 $entries[] = [
     'category' => 'panth_infrastructure',
     'subcategory' => 'performance_optimizer',
@@ -262,10 +234,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =========================================================================
-// MODULE: Panth_MalwareScanner - Security Scanning
-// =========================================================================
-
 $entries[] = [
     'category' => 'panth_infrastructure',
     'subcategory' => 'malware_scanner',
@@ -306,10 +274,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =========================================================================
-// MODULE: Panth_NotFoundPage - Custom 404 Page
-// =========================================================================
-
 $entries[] = [
     'category' => 'panth_infrastructure',
     'subcategory' => 'not_found_page',
@@ -339,10 +303,6 @@ $entries[] = [
     'is_active' => 1,
     'sort_order' => $sort++,
 ];
-
-// =========================================================================
-// CROSS-MODULE: Performance + SEO Integration Guidelines
-// =========================================================================
 
 $entries[] = [
     'category' => 'panth_infrastructure',

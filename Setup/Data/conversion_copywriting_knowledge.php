@@ -1,18 +1,5 @@
 <?php
-/**
- * Panth AdvancedSEO - AI Knowledge Base: Conversion-Optimized Copywriting
- *
- * Training data for AI meta/content generation.
- * Each entry teaches the AI how to write high-converting e-commerce copy
- * using proven power words, description formulas, headline patterns,
- * objection handling, and email signup strategies.
- */
-
 return [
-
-    // =========================================================================
-    // POWER WORDS & PHRASES (10 entries)
-    // =========================================================================
 
     [
         'category'    => 'conversion_copy',
@@ -94,10 +81,6 @@ return [
         'tags'        => ['savings', 'discount', 'pricing', 'bundle', 'free-shipping', 'anchoring'],
     ],
 
-    // =========================================================================
-    // PRODUCT DESCRIPTION FORMULAS (10 entries)
-    // =========================================================================
-
     [
         'category'    => 'conversion_copy',
         'subcategory' => 'formula_aida',
@@ -177,10 +160,6 @@ return [
         'content'     => 'The Social formula lets existing customers do the selling. It structures the product description around aggregated praise, individual testimonials, and community-driven credibility. Open with aggregate proof. "4.9 stars across 2,847 verified reviews. Our customers have spoken — and they keep coming back." This establishes scale and trust before a single feature is mentioned. Introduce the top recurring themes from reviews. "Three things come up again and again: the fit is true to size, the fabric gets softer with every wash, and the price makes them want to buy every color." Identifying patterns in reviews is more convincing than cherry-picking one glowing quote. Feature 2-3 specific customer quotes with first names and purchase context. "\'I bought this for a wedding and got so many compliments that I ordered two more for work.\' — Jessica R., Verified Buyer, purchased the Navy Slim Fit." "\'Finally, a dress shirt that does not come untucked. I am 6\'4\" and the extra-long torso option is a game-changer.\' — Marcus T., Verified Buyer." Specificity in quotes (wedding, work, height) helps different reader segments see themselves. Reference milestones that imply community. "Over 100,000 shirts sold since 2021. Our reorder rate is 68% — most customers come back within 90 days for another color." Example for food: "Our granola has a 4.8-star average and a 72% reorder rate. The most common review? \'I cannot go back to store-bought.\' Samantha D. says, \'I eat this every single morning and have for two years. My husband now steals mine, so I order the 3-pack.\'" Close with a community invitation: "Join 100,000+ customers who made the switch. Try your first bag risk-free with our satisfaction guarantee."',
         'tags'        => ['social', 'reviews', 'testimonials', 'community', 'user-generated', 'framework'],
     ],
-
-    // =========================================================================
-    // HEADLINE FORMULAS (10 entries)
-    // =========================================================================
 
     [
         'category'    => 'conversion_copy',
@@ -262,10 +241,6 @@ return [
         'tags'        => ['headline', 'selection', 'free-shipping', 'threshold', 'breadth', 'formula'],
     ],
 
-    // =========================================================================
-    // OBJECTION HANDLING IN COPY (5 entries)
-    // =========================================================================
-
     [
         'category'    => 'conversion_copy',
         'subcategory' => 'objection_price',
@@ -305,10 +280,6 @@ return [
         'content'     => 'Shipping is the silent conversion killer. 48% of cart abandonments involve unexpected shipping costs, and 22% involve delivery being too slow. Your copy must neutralize shipping anxiety before it reaches the checkout page. Technique 1 — Free Shipping Threshold Display: Place a persistent banner or header bar across the site: "Free Standard Shipping on Orders Over $50 — You Are $14 Away." The progress indicator toward free shipping is more motivating than a static threshold. On product pages: "This item ships free" in green text next to the price. Technique 2 — Delivery Date Estimation: Replace vague timelines with specific dates. "Order in the next 4 hours and receive it by Thursday, April 16" is dramatically more effective than "Ships in 3-5 business days." The specific date makes the purchase feel real and the wait feel short. Technique 3 — Shipping Speed Options: "Standard (Free): Arrives by April 18. Express ($9.99): Arrives by April 14. Next-Day ($19.99): Arrives by April 11." Present options as a table near the CTA — do not hide them in the footer or FAQs. Technique 4 — Tracking and Updates: "Every order includes real-time tracking and SMS updates at each stage: packed, shipped, out for delivery, delivered." This addresses the post-purchase anxiety of "where is my order?" Technique 5 — Returns Made Easy: "Free return shipping within 60 days. Print a prepaid label from your order page — no customer service call required." Easy returns reduce the perceived risk of shipping and make the shopper more willing to pay for the product. Example product page shipping block: "Ships Free | Arrives by April 16 | Free Returns Within 60 Days | Real-Time Tracking Included." Place this block between the price and the Add to Cart button — the highest-anxiety zone on the page.',
         'tags'        => ['objection', 'shipping', 'free-shipping', 'delivery', 'tracking', 'returns'],
     ],
-
-    // =========================================================================
-    // EMAIL / NEWSLETTER SIGNUP COPY (5 entries)
-    // =========================================================================
 
     [
         'category'    => 'conversion_copy',

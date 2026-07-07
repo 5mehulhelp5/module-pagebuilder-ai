@@ -10,10 +10,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Panth\PageBuilderAi\Controller\Adminhtml\AbstractAction;
 
-/**
- * Import/refresh all default AI knowledge entries from batch data files.
- * Skips entries that already exist (by title + category).
- */
 class Import extends AbstractAction implements HttpGetActionInterface, HttpPostActionInterface
 {
     public const ADMIN_RESOURCE = 'Panth_PageBuilderAi::ai_knowledge';
@@ -58,7 +54,7 @@ class Import extends AbstractAction implements HttpGetActionInterface, HttpPostA
                     continue;
                 }
 
-                $entries = include $path; // phpcs:ignore Magento2.Security.IncludeFile
+                $entries = include $path;
                 if (!is_array($entries)) {
                     continue;
                 }

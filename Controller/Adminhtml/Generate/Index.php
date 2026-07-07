@@ -18,13 +18,10 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
 {
     public const ADMIN_RESOURCE = 'Panth_PageBuilderAi::generate';
 
-    /** Hard cap on admin-supplied prompt length — 10 KB is plenty for any reasonable brief. */
     private const MAX_PROMPT_LENGTH = 10000;
 
-    /** Max images per request (also enforced in AiService). */
     private const MAX_IMAGES = 5;
 
-    /** Hard cap on a single base64 image payload (~3 MB decoded). */
     private const MAX_IMAGE_LENGTH = 4_000_000;
 
     public function __construct(
@@ -54,7 +51,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
 
         $request = $this->getRequest();
 
-        // Accept either JSON body or form-encoded params. Both paths are treated as untrusted admin input.
         $contentType = (string) $request->getHeader('Content-Type');
         if ($contentType !== '' && stripos($contentType, 'application/json') !== false) {
             $body = json_decode((string) $request->getContent(), true) ?: [];
@@ -62,7 +58,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
             $body = $request->getParams();
         }
 
-        // Validate user prompt.
         $prompt = (string) ($body['custom_prompt'] ?? '');
         if ($prompt === '') {
             return $result->setData(['success' => false, 'message' => 'Prompt is required.']);
@@ -70,10 +65,9 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
         if (strlen($prompt) > self::MAX_PROMPT_LENGTH) {
             return $result->setData(['success' => false, 'message' => 'Prompt is too long (max ' . self::MAX_PROMPT_LENGTH . ' chars).']);
         }
-        // Strip null bytes and control chars except \n, \r, \t — defense against binary injection into the LLM prompt.
+
         $prompt = preg_replace('/[^\P{C}\n\r\t]+/u', '', $prompt) ?? $prompt;
 
-        // Validate images array.
         $images = $body['images'] ?? [];
         if (!is_array($images)) {
             $images = [];
@@ -83,26 +77,17 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
             if (strlen($img) > self::MAX_IMAGE_LENGTH) {
                 return $result->setData(['success' => false, 'message' => 'Image #' . ($i + 1) . ' exceeds size limit.']);
             }
-            // Accept only base64 data URIs or http(s) URLs.
+
             if (!preg_match('~^(data:image/(?:png|jpe?g|gif|webp);base64,[A-Za-z0-9+/=]+|https?://[^\s"<>]+)$~i', $img)) {
                 return $result->setData(['success' => false, 'message' => 'Image #' . ($i + 1) . ' is not a valid data URI or URL.']);
             }
         }
 
-        // The same endpoint serves three very different request shapes:
-        //   (A) PageBuilder stage content — rich HTML in data-content-type rows/columns.
-        //   (B) JSON meta packs — {"meta_title":"…","meta_description":"…"} etc.
-        //   (C) Single plain-text field values — e.g. "Meta Title" text input.
-        //
-        // The caller's `output_format` hint wins; if absent we heuristically infer
-        // from the prompt (JSON keywords → json, default → pagebuilder_html).
         $requestedFormat = strtolower((string) ($body['output_format'] ?? ''));
         if (!in_array($requestedFormat, ['pagebuilder_html', 'plain', 'json'], true)) {
             $requestedFormat = $this->promptExpectsJson($prompt) ? 'json' : 'pagebuilder_html';
         }
 
-        // Resolve placeholders like {{title}}, {{identifier}}, {{content}} from the
-        // entity context so the LLM sees real page data instead of template tokens.
         $prompt = $this->resolvePlaceholders(
             $prompt,
             (string) ($body['entity_type'] ?? ''),
@@ -110,11 +95,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
             (int) ($body['store_id'] ?? 0)
         );
 
-        // When raw_prompt is true we skip every system-prompt / wrapper branch
-        // below and forward the admin's text to the LLM verbatim. Placeholder
-        // resolution above still runs, and DB logging still happens — we just
-        // flag the log row via raw_prompt=1 so audits can see which calls
-        // bypassed the system prompt.
         $rawPrompt = !empty($body['raw_prompt']);
         if ($rawPrompt) {
             $fullPrompt = $prompt;
@@ -130,9 +110,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
             $fullPrompt = $systemPrompt . "\n\n=== USER REQUEST ===\n" . $prompt;
         }
 
-        // AiService handles the DB logging itself. We just forward the admin
-        // context so the log row is annotated with entity_type / entity_id /
-        // store_id / target_field / output_format / raw_prompt.
         $logContext = [
             'entity_type'   => (string) ($body['entity_type'] ?? '') ?: null,
             'entity_id'     => (int) ($body['entity_id'] ?? 0) ?: null,
@@ -153,9 +130,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
 
         $content = (string) $response['content'];
 
-        // For JSON-style prompts, try to parse the LLM's response so individual
-        // fields (meta_title, meta_description, …) become top-level keys that the
-        // admin JS can read directly.
         if ($requestedFormat === 'json') {
             $parsed = $this->extractJson($content);
             if (is_array($parsed)) {
@@ -175,17 +149,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
         ]);
     }
 
-    /**
-     * Replace placeholders like {{title}}, {{name}}, {{sku}}, {{price}},
-     * {{description}}, {{short_description}}, {{category}}, {{identifier}},
-     * {{content}}, {{store_name}}, {{url}} with live values from the
-     * referenced entity. Unknown / unresolved placeholders are stripped so
-     * the LLM never sees literal template tokens — otherwise prompts like
-     * "Write a description for '' (SKU: )" get sent to the provider and
-     * it politely refuses, asking the admin for the missing details.
-     *
-     * Supported entity types: cms_page, product, category.
-     */
     private function resolvePlaceholders(string $prompt, string $entityType, int $entityId, int $storeId): string
     {
         if (strpos($prompt, '{{') === false) {
@@ -230,18 +193,11 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
                 $data = $this->fetchCategoryPlaceholders($connection, $entityId, $storeId) + $data;
             }
         } catch (\Throwable) {
-            // fall through with whatever values we gathered
         }
 
         return $this->stripUnresolvedPlaceholders($prompt, $data);
     }
 
-    /**
-     * Pull name/sku/price/description/short_description for a product at the
-     * requested store (fallback to the admin/store 0 value).
-     *
-     * @return array<string, string>
-     */
     private function fetchProductPlaceholders(\Magento\Framework\DB\Adapter\AdapterInterface $conn, int $entityId, int $storeId): array
     {
         $entity = $conn->fetchRow(
@@ -286,8 +242,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
             );
         }
 
-        // First parent category name (if any) — just enough for the {{category}}
-        // placeholder; a full path isn't worth the extra joins.
         $categoryName = '';
         try {
             $cat = $conn->fetchRow(
@@ -313,7 +267,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
                 $categoryName = (string) ($cat['value'] ?? '');
             }
         } catch (\Throwable) {
-            // non-fatal — leave category blank
         }
 
         return [
@@ -329,11 +282,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
         ];
     }
 
-    /**
-     * Pull name/description for a category at the requested store.
-     *
-     * @return array<string, string>
-     */
     private function fetchCategoryPlaceholders(\Magento\Framework\DB\Adapter\AdapterInterface $conn, int $entityId, int $storeId): array
     {
         $entity = $conn->fetchRow(
@@ -387,22 +335,15 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
         ];
     }
 
-    /**
-     * @param array<string, string> $data
-     */
     private function stripUnresolvedPlaceholders(string $prompt, array $data): string
     {
         foreach ($data as $key => $value) {
             $prompt = str_ireplace('{{' . $key . '}}', $value, $prompt);
         }
-        // Any remaining `{{…}}` tokens couldn't be resolved — drop them entirely.
+
         return (string) preg_replace('/\{\{[^}]+\}\}/', '', $prompt);
     }
 
-    /**
-     * Decide whether the admin's prompt expects a JSON / field-level response
-     * (meta title / description / keywords / etc.) rather than PageBuilder HTML.
-     */
     private function promptExpectsJson(string $prompt): bool
     {
         $needles = [
@@ -423,20 +364,14 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
         return false;
     }
 
-    /**
-     * Extract the first JSON object from the LLM response. Handles responses that
-     * are wrapped in ```json ... ``` fences or have leading prose.
-     *
-     * @return array<string, mixed>|null
-     */
     private function extractJson(string $content): ?array
     {
         $trimmed = trim($content);
-        // Strip common markdown code-fence wrappers.
+
         if (preg_match('/```(?:json)?\s*(\{.*?\})\s*```/is', $trimmed, $m)) {
             $trimmed = $m[1];
         }
-        // If not a bare object, locate the first {...} block.
+
         if (!str_starts_with($trimmed, '{')) {
             $start = strpos($trimmed, '{');
             $end   = strrpos($trimmed, '}');
@@ -449,15 +384,6 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
         return is_array($decoded) ? $decoded : null;
     }
 
-    /**
-     * System prompt that teaches the LLM to output PageBuilder-compliant markup.
-     *
-     * Magento PageBuilder persists content as HTML with specific `data-content-type` /
-     * `data-appearance` / `data-element` attributes. When the admin clicks the AI toolbar
-     * button we set the generated HTML as the stage's underlying textarea value, so it MUST
-     * follow this structure or PageBuilder will either ignore it (content invisible) or
-     * fall back to a single "HTML Code" block (no drag-and-drop editability).
-     */
     private function getPageBuilderSystemPrompt(): string
     {
         return <<<'PROMPT'

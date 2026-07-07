@@ -6,24 +6,6 @@ namespace Panth\PageBuilderAi\Setup\Patch\Data;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 
-/**
- * Upgrade the seeded AI prompt templates to "master-grade" 2026 Magento prompts.
- *
- * The first installer (`InstallDefaultAiPrompts`) seeds baseline prompts; this
- * patch rewrites the prompt_template of each default row (matched by `name`)
- * with a longer, much more specific prompt that:
- *
- *   1. Explains exactly what output shape the LLM must return and nothing else.
- *   2. Encodes 2026 SEO best practices (E-E-A-T, helpful content, search intent).
- *   3. Gives explicit Magento PageBuilder data-content-type guidance for
- *      PageBuilder-entity prompts so the response becomes editable blocks.
- *   4. Lists negative examples ("DO NOT output HTML in meta_title") so the LLM
- *      self-polices instead of relying on client-side parsing.
- *
- * Idempotent: we UPDATE existing rows by name. Any row an admin has customised
- * (i.e. where prompt_template ≠ the previous baseline and ≠ our new value) is
- * left alone — we only upgrade rows that still hold the v1 text.
- */
 class UpgradeDefaultAiPromptsV2 implements DataPatchInterface
 {
     public function __construct(
@@ -53,8 +35,6 @@ class UpgradeDefaultAiPromptsV2 implements DataPatchInterface
                     ['name = ?' => $name]
                 );
             } catch (\Throwable) {
-                // Row may not exist yet (fresh install executes v1 first, then us).
-                // Nothing to do.
             }
         }
 
@@ -62,9 +42,6 @@ class UpgradeDefaultAiPromptsV2 implements DataPatchInterface
         return $this;
     }
 
-    /**
-     * @return array<string, string>
-     */
     private function getMasterPrompts(): array
     {
         return [

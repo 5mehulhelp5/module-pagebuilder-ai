@@ -8,10 +8,6 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
-/**
- * Per-row View link on the AI Generation Jobs grid so the admin can drill into
- * the exact entity list a job queued / is processing.
- */
 class GenerationJobActions extends Column
 {
     public function __construct(

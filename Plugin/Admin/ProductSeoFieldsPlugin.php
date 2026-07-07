@@ -9,16 +9,6 @@ use Magento\Framework\App\ResourceConnection;
 use Panth\PageBuilderAi\Helper\Config as SeoConfig;
 use Panth\PageBuilderAi\Model\Config\Source\MetaRobots;
 
-/**
- * Adds meta_robots (select), custom_canonical_url (text), and
- * exclude_from_sitemap (toggle) fields to the product edit form's
- * "search-engine-optimization" fieldset.
- *
- * - meta_robots and in_xml_sitemap are EAV attributes, so Magento
- *   persists them automatically on save.
- * - custom_canonical_url is loaded from panth_seo_custom_canonical;
- *   saving is handled by {@see ProductSeoFieldsSavePlugin}.
- */
 class ProductSeoFieldsPlugin
 {
     private const CANONICAL_TABLE = 'panth_seo_custom_canonical';
@@ -32,20 +22,12 @@ class ProductSeoFieldsPlugin
     ) {
     }
 
-    /**
-     * Inject SEO fields into the product form meta.
-     *
-     * @param ProductDataProvider   $subject
-     * @param array<string, mixed>  $result
-     * @return array<string, mixed>
-     */
     public function afterGetMeta(ProductDataProvider $subject, array $result): array
     {
         if (!$this->seoConfig->isEnabled()) {
             return $result;
         }
 
-        // -- Meta Robots select --
         $result['search-engine-optimization']['children']['meta_robots'] = [
             'arguments' => [
                 'data' => [
@@ -62,7 +44,6 @@ class ProductSeoFieldsPlugin
             ],
         ];
 
-        // -- Custom Canonical URL text --
         $result['search-engine-optimization']['children']['custom_canonical_url'] = [
             'arguments' => [
                 'data' => [
@@ -82,7 +63,6 @@ class ProductSeoFieldsPlugin
             ],
         ];
 
-        // -- OG Title --
         $result['search-engine-optimization']['children']['og_title'] = [
             'arguments' => [
                 'data' => [
@@ -99,7 +79,6 @@ class ProductSeoFieldsPlugin
             ],
         ];
 
-        // -- OG Description --
         $result['search-engine-optimization']['children']['og_description'] = [
             'arguments' => [
                 'data' => [
@@ -116,7 +95,6 @@ class ProductSeoFieldsPlugin
             ],
         ];
 
-        // -- OG Image URL --
         $result['search-engine-optimization']['children']['og_image'] = [
             'arguments' => [
                 'data' => [
@@ -133,7 +111,6 @@ class ProductSeoFieldsPlugin
             ],
         ];
 
-        // -- Exclude from Sitemap toggle --
         $result['search-engine-optimization']['children']['exclude_from_sitemap'] = [
             'arguments' => [
                 'data' => [
@@ -159,7 +136,6 @@ class ProductSeoFieldsPlugin
             ],
         ];
 
-        // -- AI Generate Meta button --
         if ($this->seoConfig->isEnabled() && $this->seoConfig->hasOwnApiKey()) {
             $generateUrl = $this->backendUrl->getUrl('panth_pagebuilderai/generate/index');
             $result['search-engine-optimization']['children']['ai_generate_container'] = [
@@ -180,13 +156,6 @@ class ProductSeoFieldsPlugin
         return $result;
     }
 
-    /**
-     * Pre-fill custom_canonical_url from the database.
-     *
-     * @param ProductDataProvider   $subject
-     * @param array<string, mixed>  $result
-     * @return array<string, mixed>
-     */
     public function afterGetData(ProductDataProvider $subject, array $result): array
     {
         if (!$this->seoConfig->isEnabled()) {
@@ -214,9 +183,6 @@ class ProductSeoFieldsPlugin
         return $result;
     }
 
-    /**
-     * Load saved prompts for dropdown.
-     */
     private function loadPrompts(string $entityType): array
     {
         try {
@@ -238,10 +204,6 @@ class ProductSeoFieldsPlugin
         }
     }
 
-    /**
-     * Build inline HTML + JS for the AI Generate button with prompt selector
-     * and per-field AI generation buttons.
-     */
     private function buildAiButtonHtml(string $generateUrl, string $entityType): string
     {
         $fieldMap = [
@@ -670,13 +632,6 @@ setTimeout(function() {
 HTML;
     }
 
-    /**
-     * Load the custom canonical URL from panth_seo_custom_canonical.
-     *
-     * The table is owned by the optional Panth_AdvancedSEO module and may not
-     * be installed on every environment. Guard the lookup with isTableExists()
-     * and a catch-all so a missing table never crashes product edit.
-     */
     private function loadCanonicalUrl(string $entityType, int $entityId, int $storeId): ?string
     {
         try {

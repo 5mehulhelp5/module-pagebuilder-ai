@@ -7,9 +7,6 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 class AiKnowledgeCategory implements OptionSourceInterface
 {
-    /**
-     * @return array<int, array{value: string, label: string}>
-     */
     public function toOptionArray(): array
     {
         return [

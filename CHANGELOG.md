@@ -4,6 +4,11 @@ All notable changes to this extension are documented here. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.18]
+
+### Changed
+- Code cleanup: removed redundant inline comments and docblocks from the PHP source. No functional changes.
+
 ## [1.2.17]
 
 ### Changed

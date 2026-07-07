@@ -1,19 +1,5 @@
 <?php
-/**
- * Panth AdvancedSEO - Technical SEO Knowledge Base
- *
- * AI training data covering Google 2026 standards, schema markup,
- * meta tags, and technical SEO best practices.
- *
- * @category  Panth
- * @package   Panth_AdvancedSEO
- */
-
 return [
-
-    // =========================================================================
-    // GOOGLE 2026 ALGORITHM (10 entries)
-    // =========================================================================
 
     [
         'id'          => 'google_2026_core_web_vitals',
@@ -104,10 +90,6 @@ return [
         'tags'        => ['sge', 'ai-overview', 'generative-search', 'search-experience'],
         'content'     => 'Google\'s AI Overviews (formerly SGE, Search Generative Experience) launched broadly in 2024 and is now present in approximately 30-40% of search results in 2026. AI Overviews generate synthesized answers at the top of search results, pulling from multiple sources and providing citation links. Impact on SEO: click-through rates for informational queries have decreased by 15-25% for traditional organic results when AI Overviews are present. However, being cited as a source within the AI Overview drives significant referral traffic with higher engagement metrics. Optimization strategies: (1) Be a primary source of original data, statistics, and research. AI Overviews heavily cite pages with unique, verifiable data points. Publish original surveys, case studies, benchmark reports, and proprietary research. (2) Provide comprehensive, well-structured content that covers topics from multiple angles. AI Overviews synthesize from pages that address the topic thoroughly rather than superficially. (3) Build topical authority through content clusters. Sites with deep, interconnected content on a topic are more frequently cited than sites with isolated articles. Create pillar pages with supporting content linked through strong internal architecture. (4) Maintain strong E-E-A-T signals. AI Overviews preferentially cite authoritative sources. Named experts, credentials, and institutional authority increase citation likelihood. (5) Use structured data extensively. Schema markup helps Google understand your content\'s entities and relationships, making it easier to extract for AI synthesis. (6) Optimize for conversational and natural language queries. AI Overviews are triggered more by complex, multi-part questions than simple keyword queries. Target long-tail, conversational phrases. (7) Monitor your AI Overview presence using Google Search Console, which now reports impressions and clicks from AI Overviews separately. (8) Do not attempt to block AI Overview extraction while maintaining organic rankings. The same signals that drive organic visibility also drive AI Overview citations. Focus on being the best, most authoritative source on your topics.',
     ],
-
-    // =========================================================================
-    // SCHEMA MARKUP (15 entries)
-    // =========================================================================
 
     [
         'id'          => 'schema_product',
@@ -244,10 +226,6 @@ return [
         'content'     => 'SiteNavigationElement schema (schema.org/SiteNavigationElement) describes the main navigation structure of a website, helping Google understand site hierarchy and potentially influencing sitelink generation in search results. While Google generates sitelinks algorithmically, proper navigation markup provides clear signals about your most important pages. Implementation: SiteNavigationElement is applied to navigation elements, typically the main menu. Each navigation item is marked with name and url properties. Example using ItemList structure (recommended): {"@context":"https://schema.org","@type":"ItemList","name":"Main Navigation","itemListElement":[{"@type":"SiteNavigationElement","position":1,"name":"Products","url":"https://example.com/products"},{"@type":"SiteNavigationElement","position":2,"name":"Categories","url":"https://example.com/categories"},{"@type":"SiteNavigationElement","position":3,"name":"Sale","url":"https://example.com/sale"},{"@type":"SiteNavigationElement","position":4,"name":"Blog","url":"https://example.com/blog"},{"@type":"SiteNavigationElement","position":5,"name":"About Us","url":"https://example.com/about"},{"@type":"SiteNavigationElement","position":6,"name":"Contact","url":"https://example.com/contact"}]}. For mega menus with subcategories, use nested structures: {"@type":"SiteNavigationElement","name":"Electronics","url":"https://example.com/electronics","hasPart":[{"@type":"SiteNavigationElement","name":"Laptops","url":"https://example.com/electronics/laptops"},{"@type":"SiteNavigationElement","name":"Phones","url":"https://example.com/electronics/phones"}]}. Best practices: (1) Include only your primary navigation items, typically 5-10 top-level entries. Do not map every link on the page. (2) Place this schema on all pages where the navigation is present (typically site-wide). (3) URLs must match the actual hrefs in your visible navigation. (4) Order should reflect the visual order of your navigation menu. (5) For Magento, dynamically generate from the category tree and CMS page menu configuration. (6) Combine with BreadcrumbList schema for comprehensive site structure markup. (7) Do not include user account links, cart links, or utility navigation in this schema. (8) Keep names concise and descriptive, matching the visible menu labels exactly.',
     ],
 
-    // =========================================================================
-    // META TAGS (10 entries)
-    // =========================================================================
-
     [
         'id'          => 'meta_title_optimization',
         'category'    => 'seo',
@@ -337,10 +315,6 @@ return [
         'tags'        => ['csp', 'security-headers', 'content-security-policy', 'https', 'trust'],
         'content'     => 'Content-Security-Policy (CSP) is an HTTP header (or meta tag) that controls which resources the browser is allowed to load, preventing cross-site scripting (XSS), clickjacking, and code injection attacks. While CSP does not directly affect SEO rankings, it contributes to site security, which impacts trust signals, safe browsing status, and user experience. Implementation via HTTP header (preferred): Content-Security-Policy: default-src \'self\'; script-src \'self\' https://www.googletagmanager.com https://www.google-analytics.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; img-src \'self\' data: https:; font-src \'self\' https://fonts.gstatic.com; connect-src \'self\' https://www.google-analytics.com; frame-src https://www.youtube.com https://www.google.com; base-uri \'self\'; form-action \'self\'. Or via meta tag: <meta http-equiv="Content-Security-Policy" content="default-src \'self\'; ...">. Key directives: default-src (fallback for all resource types), script-src (JavaScript sources), style-src (CSS sources), img-src (image sources), font-src (font sources), connect-src (XHR/fetch/WebSocket targets), frame-src (iframe sources), media-src (audio/video sources), base-uri (restricts base tag targets), form-action (restricts form submission targets), frame-ancestors (prevents clickjacking, replaces X-Frame-Options). SEO-relevant considerations: (1) Overly restrictive CSP can break Googlebot rendering. Ensure Google\'s domains are whitelisted: googletagmanager.com, google-analytics.com, google.com, gstatic.com, googleapis.com. (2) Test CSP in report-only mode first: Content-Security-Policy-Report-Only with a report-uri directive to catch violations without breaking functionality. (3) Magento requires unsafe-inline for some core styles and scripts. Use nonces or hashes for stricter CSP. (4) Other security headers to implement alongside CSP: X-Content-Type-Options: nosniff, X-Frame-Options: SAMEORIGIN, Strict-Transport-Security: max-age=31536000; includeSubDomains (HSTS), Referrer-Policy: strict-origin-when-cross-origin, Permissions-Policy (restrict camera, microphone, geolocation access). These headers collectively improve your security posture, protect against safe browsing flags, and support HTTPS trust signals.',
     ],
-
-    // =========================================================================
-    // TECHNICAL SEO (15 entries)
-    // =========================================================================
 
     [
         'id'          => 'tech_xml_sitemap',

@@ -9,19 +9,8 @@ use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\Framework\App\ResourceConnection;
 use Psr\Log\LoggerInterface;
 
-/**
- * Builds the context array passed into AI generation.
- *
- * Ported verbatim from Panth\AdvancedSEO\Model\Score\ContextBuilder. The class
- * continues to live under Model/Score/ for file-path compatibility with any
- * stray references in admin controllers / third-party plugins that were
- * designed against the AdvancedSEO layout.
- */
 class ContextBuilder
 {
-    /**
-     * Mapping of third-party entity types to their database table and columns.
-     */
     private const THIRD_PARTY_TABLE_MAP = [
         'faq' => [
             'table' => 'panth_faq_item',
@@ -67,9 +56,6 @@ class ContextBuilder
     ) {
     }
 
-    /**
-     * @return array<string,mixed>
-     */
     public function build(string $entityType, int $entityId, int $storeId): array
     {
         $ctx = [
@@ -130,9 +116,6 @@ class ContextBuilder
         return $ctx;
     }
 
-    /**
-     * @param array<string,mixed> $ctx
-     */
     private function buildThirdPartyContext(array &$ctx, string $entityType, int $entityId): void
     {
         $mapping = self::THIRD_PARTY_TABLE_MAP[$entityType] ?? null;

@@ -7,22 +7,6 @@ use Magento\Backend\Model\UrlInterface as BackendUrl;
 use Magento\Framework\App\ResourceConnection;
 use Panth\PageBuilderAi\Helper\Config as AiConfig;
 
-/**
- * Shared renderer for AI generate button HTML + JS.
- *
- * Used by third-party Panth module plugins to inject AI content generation
- * buttons into admin forms without duplicating HTML/JS code.
- *
- * Security: the template and user-supplied values are injected into an inline
- * <script> block. To avoid XSS:
- *  - Data passed from the server is emitted via json_encode with
- *    JSON_HEX_APOS|JSON_HEX_AMP|JSON_HEX_QUOT|JSON_HEX_TAG so even template
- *    text with quotes / angle brackets / ampersands cannot close the script
- *    or string literal.
- *  - Entity type / input field names are passed through rawurlencode-like
- *    escaping via addslashes because they are the only values consumed from
- *    untrusted string contexts inside the JS.
- */
 class AiButtonRenderer
 {
     public function __construct(
@@ -32,21 +16,11 @@ class AiButtonRenderer
     ) {
     }
 
-    /**
-     * Check if AI generation is available.
-     */
     public function isAvailable(): bool
     {
         return $this->config->isEnabled() && $this->config->hasOwnApiKey();
     }
 
-    /**
-     * Build a UI component meta array for the AI generate container.
-     *
-     * @param array<string,string>              $fieldMap
-     * @param array<string,array<string,mixed>> $perFieldConfig
-     * @return array<string,mixed>
-     */
     public function buildContainerMeta(
         string $entityType,
         string $idFieldName,
@@ -83,9 +57,6 @@ class AiButtonRenderer
         ];
     }
 
-    /**
-     * @return array<int,array<string,mixed>>
-     */
     private function loadPrompts(string $entityType): array
     {
         try {
@@ -107,10 +78,6 @@ class AiButtonRenderer
         }
     }
 
-    /**
-     * @param array<string,string>              $fieldMap
-     * @param array<string,array<string,mixed>> $perFieldConfig
-     */
     private function buildHtml(
         string $generateUrl,
         string $entityType,

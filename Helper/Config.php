@@ -73,18 +73,11 @@ class Config extends AbstractHelper
         return $val !== null && $val !== '' ? (float) $val : 0.7;
     }
 
-    /**
-     * Monthly token budget cap for AI generation. 0 means "disabled — reject
-     * all AI calls." The budget is enforced atomically in AbstractHttpAdapter.
-     */
     public function getMonthlyBudget(): int
     {
         return (int) ($this->scopeConfig->getValue(self::XML_MONTHLY_BUDGET) ?: 0);
     }
 
-    /**
-     * Response cache TTL in seconds. 0 disables caching entirely.
-     */
     public function getCacheTtl(): int
     {
         $raw = $this->scopeConfig->getValue(self::XML_CACHE_TTL);
@@ -94,17 +87,11 @@ class Config extends AbstractHelper
         return max(0, (int) $raw);
     }
 
-    /**
-     * Writing tone (used inside AI prompt templates where applicable).
-     */
     public function getTone(): string
     {
         return (string) ($this->scopeConfig->getValue(self::XML_TONE) ?: 'professional');
     }
 
-    /**
-     * Check if this module has its own API key configured for the selected provider.
-     */
     public function hasOwnApiKey(): bool
     {
         $provider = $this->getProvider();
@@ -117,18 +104,11 @@ class Config extends AbstractHelper
         return false;
     }
 
-    /**
-     * @deprecated PageBuilderAi now owns the AI backend — AdvancedSEO integration is gone.
-     *             Kept for backward compatibility with any external callers; always returns false.
-     */
     public function isAdvancedSeoAvailable(): bool
     {
         return false;
     }
 
-    /**
-     * True if AI is configured and usable.
-     */
     public function isAiAvailable(): bool
     {
         if (!$this->isEnabled()) {
@@ -137,10 +117,6 @@ class Config extends AbstractHelper
         return $this->hasOwnApiKey();
     }
 
-    /**
-     * Which backend is active. After the merge the only possible non-"none"
-     * value is "own". Retained for any callers that dispatched on backend.
-     */
     public function getActiveBackend(): string
     {
         return $this->hasOwnApiKey() ? 'own' : 'none';

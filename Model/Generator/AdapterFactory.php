@@ -8,13 +8,6 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\ScopeInterface;
 use Panth\PageBuilderAi\Api\AiGeneratorInterface;
 
-/**
- * Resolves the correct AI content-generation adapter based on configuration.
- * Returns NullAdapter when AI is disabled or provider is not configured.
- *
- * Legitimate ObjectManager usage: this is a factory class whose target
- * concrete type is chosen at runtime from a store-scope configuration value.
- */
 class AdapterFactory implements AiGeneratorInterface
 {
     private ?AiGeneratorInterface $resolved = null;
@@ -57,10 +50,6 @@ class AdapterFactory implements AiGeneratorInterface
         return $this->resolved;
     }
 
-    /**
-     * Explicitly request a particular adapter by provider key. Useful for
-     * delegating from AiService when the caller has its own provider pick.
-     */
     public function get(string $provider): AiGeneratorInterface
     {
         return match ($provider) {

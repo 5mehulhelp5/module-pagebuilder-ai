@@ -1,19 +1,5 @@
 <?php
-/**
- * Panth AdvancedSEO - PageBuilder Knowledge Base
- *
- * Comprehensive AI training data about Magento PageBuilder components,
- * HTML output structures, CSS classes, appearance variants, and SEO implications.
- *
- * Sourced from: vendor/magento/module-page-builder/view/adminhtml/pagebuilder/content_type/*.xml
- * and vendor/magento/module-page-builder/view/adminhtml/web/template/content-type/ master templates.
- */
-
 return [
-
-    // =========================================================================
-    // ROW COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -63,10 +49,6 @@ return [
         'tags' => 'row,hierarchy,parent,children,nesting,rules,structure',
     ],
 
-    // =========================================================================
-    // COLUMN GROUP COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'column-group',
@@ -83,10 +65,6 @@ return [
         'tags' => 'column-group,hierarchy,nesting,column-line,parent,children',
     ],
 
-    // =========================================================================
-    // COLUMN LINE COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'column-line',
@@ -94,10 +72,6 @@ return [
         'content' => 'Column Line is a system component that represents a single row of columns within a column group. HTML output: <div class="pagebuilder-column-line" data-content-type="column-line" data-appearance="default" data-grid-size="12" data-element="main" style="display: flex; width: 100%;">COLUMN CHILDREN</div>. The column-line always has class "pagebuilder-column-line" and static styles display:flex and width:100%. It carries data-grid-size to define the grid. Column-line is a system type (is_system=false means it does not appear in the menu). It can only exist inside a column-group and only accepts column children.',
         'tags' => 'column-line,layout,flex,system,grid,columns',
     ],
-
-    // =========================================================================
-    // COLUMN COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -123,10 +97,6 @@ return [
         'tags' => 'column,width,grid,percentage,12-column,responsive,sizing',
     ],
 
-    // =========================================================================
-    // HEADING COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'heading',
@@ -142,10 +112,6 @@ return [
         'content' => 'PageBuilder headings have critical SEO implications: 1) Heading hierarchy - h1 should be used once per page (usually the page title). AI-generated content should use h2 for main sections and h3-h6 for subsections. 2) The heading text is rendered as innerHTML, supporting basic HTML formatting. 3) When generating PageBuilder content for SEO, ensure proper heading hierarchy: use h2 for product feature sections, h3 for individual features. 4) Example SEO-optimized heading: <h2 data-content-type="heading" data-appearance="default" style="">Product Features</h2>. 5) Avoid skipping heading levels (e.g., h1 then h3 without h2). 6) The heading_type attribute controls which tag renders - this directly impacts how search engines understand page structure.',
         'tags' => 'heading,seo,hierarchy,h1,h2,accessibility,semantic,structure',
     ],
-
-    // =========================================================================
-    // TEXT COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -163,10 +129,6 @@ return [
         'tags' => 'text,seo,content,semantic,html,links,keywords',
     ],
 
-    // =========================================================================
-    // HTML CODE COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'html',
@@ -174,10 +136,6 @@ return [
         'content' => 'The HTML Code component renders raw HTML/CSS/JS content. HTML output: <div data-content-type="html" data-appearance="default" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;" class="bypass-html-filter">RAW HTML CONTENT HERE</div>. Unlike the Text component which uses html binding, the HTML component uses text binding (content is HTML-decoded). The "bypass-html-filter" class prevents content sanitization. The HTML content is decoded from stored format using the html/decode converter. Can contain: custom HTML, CSS (<style> tags), JavaScript (<script> tags), Magento widgets and directives. Parents: root-container, row, column, tab-item. Style properties: text_align, border styles, display, margins, padding.',
         'tags' => 'html,code,raw,custom,script,style,embed',
     ],
-
-    // =========================================================================
-    // IMAGE COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -203,10 +161,6 @@ return [
         'tags' => 'image,seo,alt,title,figcaption,accessibility,descriptive',
     ],
 
-    // =========================================================================
-    // VIDEO COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'video',
@@ -222,10 +176,6 @@ return [
         'content' => 'Video SEO in PageBuilder: 1) Hosted videos (YouTube/Vimeo) render as iframes - search engines can follow the iframe src to discover video content. 2) Direct video files use the <video> tag with controls attribute for accessibility. 3) The pagebuilder-video-container class provides responsive aspect ratio (typically 16:9 via CSS). 4) max-width on the inner element controls maximum video display size. 5) For SEO, complement videos with text content describing the video - PageBuilder videos lack built-in schema markup. 6) Consider adding structured data (VideoObject schema) via the HTML Code component alongside video components. 7) Video autoplay with muted attribute is used for background-style videos.',
         'tags' => 'video,seo,iframe,accessibility,schema,structured-data',
     ],
-
-    // =========================================================================
-    // BANNER COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -267,10 +217,6 @@ return [
         'tags' => 'banner,seo,accessibility,aria,contrast,alt,link',
     ],
 
-    // =========================================================================
-    // SLIDER COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'slider',
@@ -278,10 +224,6 @@ return [
         'content' => 'The slider is a container for slide content types, rendered as a carousel. HTML output: <div class="pagebuilder-slider" data-content-type="slider" data-appearance="default" data-autoplay="false" data-autoplay-speed="4000" data-fade="false" data-infinite-loop="false" data-show-arrows="false" data-show-dots="true" data-element="main" style="min-height: 300px; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 0px;">SLIDE CHILDREN HERE</div>. Key attributes: data-autoplay="true|false", data-autoplay-speed="4000" (milliseconds), data-fade="true|false" (fade vs slide transition), data-infinite-loop="true|false", data-show-arrows="true|false", data-show-dots="true|false". The slider uses Slick carousel library on the frontend. Style properties: text_align, min_height, border styles, display, margins, padding. Only accepts slide children.',
         'tags' => 'slider,carousel,slick,autoplay,dots,arrows,transition',
     ],
-
-    // =========================================================================
-    // SLIDE COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -299,10 +241,6 @@ return [
         'tags' => 'slide,collage-left,collage-centered,collage-right,variants',
     ],
 
-    // =========================================================================
-    // BUTTONS COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'buttons',
@@ -319,10 +257,6 @@ return [
         'tags' => 'buttons,container,stacked,vertical,group,flex',
     ],
 
-    // =========================================================================
-    // BUTTON ITEM COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'button-item',
@@ -330,10 +264,6 @@ return [
         'content' => 'Individual button within a buttons container. HTML output with link: <div data-content-type="button-item" data-appearance="default" data-element="main"><a class="pagebuilder-button-primary" href="https://example.com" target="_blank" data-link-type="default" data-element="link" style="text-align: center; border-style: solid; border-color: #000; border-width: 2px; border-radius: 4px; margin: 0px; padding: 10px 20px;"><span data-element="link_text">Button Text</span></a></div>. Without link: <div data-content-type="button-item" data-appearance="default" data-element="main"><div class="pagebuilder-button-primary" data-element="empty_link" style="text-align: center; border-style: solid; ..."><span data-element="link_text">Button Text</span></div></div>. Button type classes: pagebuilder-button-primary, pagebuilder-button-secondary, pagebuilder-button-link. The button text is inside a <span> with HTML-escaped content. Styles are applied to the link/empty_link element, not the outer wrapper.',
         'tags' => 'button-item,link,cta,primary,secondary,action',
     ],
-
-    // =========================================================================
-    // TABS COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -343,10 +273,6 @@ return [
         'tags' => 'tabs,tablist,navigation,aria,accessibility,tabbed',
     ],
 
-    // =========================================================================
-    // TAB ITEM COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'tab-item',
@@ -354,10 +280,6 @@ return [
         'content' => 'Individual tab panel within a tabs container. HTML output: <div data-content-type="tab-item" data-appearance="default" data-tab-name="Tab Name" data-background-images="{}" id="UNIQUE_TAB_ID" data-element="main" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 10px;">TAB CONTENT CHILDREN</div>. The tab-item has a unique id attribute used for tab navigation linking. data-tab-name stores the tab title displayed in the tab header. Tab items accept all content types EXCEPT rows and tabs (no nested tabs). Style properties include background image/color, text alignment, borders, justify_content, min_height, margins, padding. The container element provides flex column layout.',
         'tags' => 'tab-item,panel,content,tabbed,id',
     ],
-
-    // =========================================================================
-    // DIVIDER COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -367,10 +289,6 @@ return [
         'tags' => 'divider,hr,separator,line,horizontal-rule,thematic-break',
     ],
 
-    // =========================================================================
-    // BLOCK (CMS BLOCK) COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'block',
@@ -378,10 +296,6 @@ return [
         'content' => 'The Block component embeds a CMS static block via widget directive. HTML output: <div data-content-type="block" data-appearance="default" data-element="main" style="text-align: left; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;">{{widget type="Magento\\Cms\\Block\\Widget\\Block" template="widget/static_block/default.phtml" block_id="BLOCK_ID" type_name="CMS Static Block"}}</div>. The inner content is a Magento widget directive that gets rendered server-side. The widget directive is converted by the block/mass-converter/widget-directive converter. The rendered output replaces the directive with actual block HTML. Parents: root-container, row, column, tab-item. Block content is fully rendered HTML on the frontend, making it SEO-friendly.',
         'tags' => 'block,cms,static-block,widget,directive,embedded',
     ],
-
-    // =========================================================================
-    // PRODUCTS COMPONENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -407,10 +321,6 @@ return [
         'tags' => 'products,seo,internal-links,crawlable,catalog,widget',
     ],
 
-    // =========================================================================
-    // MAP COMPONENT
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'map',
@@ -418,10 +328,6 @@ return [
         'content' => 'The map component renders a Google Maps embed. HTML output: <div data-content-type="map" data-appearance="default" data-show-controls="true" data-locations="[{\"location_name\":\"Store\",\"position\":{\"latitude\":40.7128,\"longitude\":-74.0060},\"comment\":\"Visit us\",\"phone\":\"555-0100\",\"address\":\"123 Main St\",\"city\":\"New York\",\"state\":\"NY\",\"zipcode\":\"10001\",\"country\":\"US\"}]" data-element="main" style="text-align: center; border-style: none; border-width: 1px; border-radius: 0px; height: 300px; margin: 0px; padding: 0px;"></div>. The map is an empty div that gets initialized by JavaScript using Google Maps API. data-locations contains a JSON-encoded array of location objects. data-show-controls="true|false" toggles map controls. The height style sets the map container height. SEO note: map content is JavaScript-rendered and not crawlable - include address information in text content alongside the map.',
         'tags' => 'map,google-maps,location,address,embed,javascript',
     ],
-
-    // =========================================================================
-    // LAYOUT PATTERNS
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -455,10 +361,6 @@ return [
         'tags' => 'layout,landing-page,product-page,full-page,structure,seo',
     ],
 
-    // =========================================================================
-    // RESPONSIVE BEHAVIOR
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'responsive',
@@ -475,10 +377,6 @@ return [
         'tags' => 'responsive,mobile,columns,stacking,flex,order',
     ],
 
-    // =========================================================================
-    // COMMON CSS CLASSES
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'css-classes',
@@ -487,10 +385,6 @@ return [
         'tags' => 'css-classes,reference,styling,selectors,complete-list',
     ],
 
-    // =========================================================================
-    // DATA ATTRIBUTES
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'data-attributes',
@@ -498,10 +392,6 @@ return [
         'content' => 'Every PageBuilder content type outputs these core data attributes: 1) data-content-type="TYPE" - identifies the component type (row, column, column-group, column-line, heading, text, html, image, video, banner, slider, slide, tabs, tab-item, buttons, button-item, block, products, divider, map). 2) data-appearance="VARIANT" - specifies the appearance variant. 3) data-element="ELEMENT_NAME" - identifies which element definition from XML is being rendered (main, inner, wrapper, overlay, content, button, link, etc.). Additional type-specific attributes: data-enable-parallax (row), data-parallax-speed (row), data-background-images (row/column/banner/slide/tab-item - JSON), data-background-type (row/banner/slide), data-show-button (banner/slide), data-show-overlay (banner/slide), data-grid-size (column-group/column-line), data-active-tab (tabs), data-tab-name (tab-item), data-slide-name (slide), data-same-width (buttons), data-autoplay/data-autoplay-speed/data-fade/data-infinite-loop/data-show-arrows/data-show-dots (slider/products carousel), data-link-type (links), data-overlay-color (banner/slide overlay), data-video-overlay-color (video overlay), data-show-controls (map), data-locations (map - JSON).',
         'tags' => 'data-attributes,content-type,appearance,element,reference',
     ],
-
-    // =========================================================================
-    // WIDGET EMBEDDING
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -519,10 +409,6 @@ return [
         'tags' => 'media,directive,store-url,config,variable,image-path',
     ],
 
-    // =========================================================================
-    // ACCESSIBILITY
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'accessibility',
@@ -530,10 +416,6 @@ return [
         'content' => 'Built-in accessibility features in PageBuilder components: 1) TABS: role="tablist" on navigation <ul>, role="tab" on each <li> tab header. Tab content panels linked via id/href attributes. 2) BANNERS/SLIDES: aria-label attribute on overlay elements for screen reader description. title attribute on overlays and links. 3) IMAGES: alt attribute on all <img> elements (both desktop and mobile). title attribute for tooltips. <figcaption> for image captions within <figure>. 4) BUTTONS: Semantic <a> elements for linked buttons with href for keyboard navigation. <button type="button"> elements for banner/slide CTA buttons. 5) VIDEO: <iframe allowfullscreen> for hosted videos. <video controls> for direct videos. 6) HEADINGS: Semantic h1-h6 tags (not styled divs). 7) DIVIDER: Semantic <hr> element for thematic breaks. For improved accessibility: ensure sufficient color contrast in overlays, provide alt text for all images, maintain heading hierarchy, add aria attributes via the HTML Code component where needed.',
         'tags' => 'accessibility,aria,wcag,screen-reader,keyboard,semantic',
     ],
-
-    // =========================================================================
-    // STYLE PATTERNS
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -551,10 +433,6 @@ return [
         'tags' => 'background,image,responsive,mobile,desktop,json',
     ],
 
-    // =========================================================================
-    // CONTENT TYPE HIERARCHY
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'hierarchy',
@@ -570,10 +448,6 @@ return [
         'content' => 'PageBuilder organizes content types into menu sections: LAYOUT section: Row (sortOrder:1), Columns/column-group (sortOrder:10), Column (sortOrder:15), Tabs (sortOrder:20). ELEMENTS section: Text (sortOrder:1), Heading (sortOrder:20), Buttons (sortOrder:30), Divider (sortOrder:40), HTML Code (sortOrder:70). MEDIA section: Image (sortOrder:1), Video (sortOrder:20), Banner (sortOrder:30), Slider (sortOrder:40), Map (sortOrder:50). ADD CONTENT section: Block (sortOrder:1), Products (sortOrder:20). System types not in menu: column-line, button-item (is_system=false), column (is_system=false). These appear automatically when their parent is created.',
         'tags' => 'menu,sections,categories,organization,sortorder',
     ],
-
-    // =========================================================================
-    // GENERATING PAGEBUILDER CONTENT
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -647,10 +521,6 @@ return [
         'tags' => 'generation,example,divider,separator,hr,spacing',
     ],
 
-    // =========================================================================
-    // SEO COMPREHENSIVE GUIDE
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'seo',
@@ -675,10 +545,6 @@ return [
         'tags' => 'seo,structured-data,schema,json-ld,rich-snippets,faq',
     ],
 
-    // =========================================================================
-    // VIDEO BACKGROUND PATTERNS
-    // =========================================================================
-
     [
         'category' => 'pagebuilder',
         'subcategory' => 'video-background',
@@ -686,10 +552,6 @@ return [
         'content' => 'Rows, banners, and slides support video backgrounds via data attributes: data-background-type="video" (switches from image to video mode), data-video-src="https://www.youtube.com/embed/VIDEO_ID" (video URL), data-video-loop="true|false", data-video-play-only-visible="true|false", data-video-lazy-load="true|false", data-video-fallback-src="{{media url=wysiwyg/fallback.jpg}}" (image shown before video loads or on mobile). The video overlay element provides a color tint: <div class="video-overlay" data-video-overlay-color="rgba(0,0,0,0.5)" style="background-color: rgba(0,0,0,0.5);"></div>. Video backgrounds are initialized by JavaScript on the frontend. For SEO, always provide text content alongside video backgrounds since the video itself is not crawlable as text content.',
         'tags' => 'video,background,row,banner,slide,overlay,fallback',
     ],
-
-    // =========================================================================
-    // COMPLETE PAGE EXAMPLES
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',
@@ -706,10 +568,6 @@ return [
         'content' => 'Category landing page optimized for SEO: ROW 1 (full-width): Banner with category hero image, h1 "Category Name" (if not auto-generated by Magento), brief category description. ROW 2 (contained): h2 "Popular in Category", Products carousel appearance showing bestsellers. ROW 3 (contained): Two-column layout - left column (66.6%) with h2 "Category Description" and rich text content with keywords, right column (33.3%) with image. ROW 4 (contained): Tabs component - Tab 1: "Buying Guide" with detailed text, Tab 2: "Size Chart" with HTML table, Tab 3: "FAQ" with questions and answers. ROW 5 (contained): h2 "Related Categories", Buttons inline with links to subcategories. ROW 6 (contained): Divider, then CMS Block widget for cross-category promotions. This approach maximizes keyword-rich content around product listings while maintaining good UX with organized tab content.',
         'tags' => 'complete-page,category,landing,seo,products,content',
     ],
-
-    // =========================================================================
-    // LINK TYPES
-    // =========================================================================
 
     [
         'category' => 'pagebuilder',

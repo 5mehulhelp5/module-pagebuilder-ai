@@ -8,9 +8,6 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
-/**
- * Per-row action column for the request-log grid: View and Delete.
- */
 class RequestLogActions extends Column
 {
     public function __construct(

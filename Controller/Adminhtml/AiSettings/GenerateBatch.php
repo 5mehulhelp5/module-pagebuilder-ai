@@ -12,9 +12,6 @@ use Magento\Framework\MessageQueue\PublisherInterface;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Data\Form\FormKey\Validator as FormKeyValidator;
 
-/**
- * Queues a batch of meta-generation jobs. Accepts an array of entity ids.
- */
 class GenerateBatch extends AbstractAction implements HttpPostActionInterface
 {
     public const ADMIN_RESOURCE = 'Panth_PageBuilderAi::ai_jobs';

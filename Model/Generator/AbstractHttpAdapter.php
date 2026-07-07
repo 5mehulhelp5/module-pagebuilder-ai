@@ -11,10 +11,6 @@ use Magento\Framework\Stdlib\DateTime\DateTime;
 use Panth\PageBuilderAi\Model\RequestLogger;
 use Psr\Log\LoggerInterface;
 
-/**
- * Shared behaviour for HTTP-based LLM generators.
- * Handles config, encryption, budget tracking, idempotency and retry.
- */
 abstract class AbstractHttpAdapter
 {
     protected const MAX_RETRIES = 3;
@@ -38,9 +34,6 @@ abstract class AbstractHttpAdapter
     ) {
     }
 
-    /**
-     * Fetches + decrypts the API key from store config.
-     */
     protected function getApiKey(string $path): string
     {
         $raw = (string)$this->scopeConfig->getValue($path);
@@ -55,21 +48,11 @@ abstract class AbstractHttpAdapter
         return $decrypted !== '' ? $decrypted : $raw;
     }
 
-    /**
-     * Returns the monthly token budget in tokens.
-     * A value of 0 (or missing) is treated as "no budget configured" and the
-     * adapter MUST reject requests. Callers should check the return value
-     * before making API calls.
-     */
     protected function getMonthlyBudget(): int
     {
         return (int)$this->scopeConfig->getValue('panth_pagebuilderai/ai/monthly_budget');
     }
 
-    /**
-     * Returns the configured AI sampling temperature in the 0.0-2.0 range.
-     * Falls back to 0.4 (a balanced default) when unset or out of range.
-     */
     protected function getTemperature(): float
     {
         $raw = $this->scopeConfig->getValue('panth_pagebuilderai/ai/temperature');
@@ -83,19 +66,12 @@ abstract class AbstractHttpAdapter
         return $value;
     }
 
-    /**
-     * Returns the configured per-request max token cap.
-     * Falls back to $default when unset or <= 0.
-     */
     protected function getMaxTokens(int $default = 600): int
     {
         $raw = (int)$this->scopeConfig->getValue('panth_pagebuilderai/ai/max_tokens');
         return $raw > 0 ? $raw : $default;
     }
 
-    /**
-     * Returns the response cache TTL in seconds. 0 disables caching entirely.
-     */
     protected function getCacheTtl(): int
     {
         $raw = $this->scopeConfig->getValue('panth_pagebuilderai/ai/cache_ttl');
@@ -105,9 +81,6 @@ abstract class AbstractHttpAdapter
         return max(0, (int)$raw);
     }
 
-    /**
-     * Returns the number of tokens already used this calendar month.
-     */
     protected function getMonthlyUsage(string $provider): int
     {
         $connection = $this->resource->getConnection();
@@ -123,15 +96,12 @@ abstract class AbstractHttpAdapter
         return (int)($row['used'] ?? 0);
     }
 
-    /**
-     * Atomically reserve a token budget slot before making an API call.
-     */
     protected function reserveBudget(string $provider, int $estimate, int $budget): bool
     {
         $connection = $this->resource->getConnection();
         $table = $this->resource->getTableName('panth_seo_ai_usage');
         if (!$connection->isTableExists($table)) {
-            return true; // No tracking table — allow the request
+            return true;
         }
 
         $period = date('Y-m');
@@ -164,9 +134,6 @@ abstract class AbstractHttpAdapter
         }
     }
 
-    /**
-     * Adjust the reserved token count after the actual API call completes.
-     */
     protected function adjustUsage(string $provider, int $delta): void
     {
         if ($delta === 0) {
@@ -197,9 +164,6 @@ abstract class AbstractHttpAdapter
         }
     }
 
-    /**
-     * Release a previously reserved budget.
-     */
     protected function releaseBudget(string $provider, int $estimate): void
     {
         $this->adjustUsage($provider, -$estimate);
@@ -228,11 +192,6 @@ abstract class AbstractHttpAdapter
         }
     }
 
-    /**
-     * Cached generation lookup.
-     *
-     * @return array<string,mixed>|null
-     */
     protected function loadCached(string $promptHash): ?array
     {
         $ttl = $this->getCacheTtl();
@@ -258,9 +217,6 @@ abstract class AbstractHttpAdapter
         return is_array($decoded) ? $decoded : null;
     }
 
-    /**
-     * @param array<string,mixed> $response
-     */
     protected function saveCached(string $promptHash, array $response, string $provider = ''): void
     {
         $ttl = $this->getCacheTtl();
@@ -290,23 +246,15 @@ abstract class AbstractHttpAdapter
         }
     }
 
-    /** Allowed API domains for SSRF prevention */
     private const ALLOWED_API_HOSTS = [
         'api.openai.com',
         'api.anthropic.com',
     ];
 
-    /** Cap response body to 2 MB to prevent memory exhaustion. */
     private const MAX_RESPONSE_BYTES = 2 * 1024 * 1024;
 
-    /**
-     * @param array<string,string> $headers
-     * @param array<string,mixed>  $payload
-     * @return array{status:int, body:string}
-     */
     protected function curlPost(string $url, array $headers, array $payload): array
     {
-        // SSRF prevention: only allow HTTPS to known AI API domains
         $parsedUrl = parse_url($url);
         $host = strtolower($parsedUrl['host'] ?? '');
         $scheme = strtolower($parsedUrl['scheme'] ?? '');
@@ -351,12 +299,12 @@ abstract class AbstractHttpAdapter
                 $lastStatus = 0;
             } else {
                 $bodyStr = (string)$body;
-                // Cap response size to prevent memory exhaustion attacks.
+
                 if (strlen($bodyStr) > self::MAX_RESPONSE_BYTES) {
                     $this->logger->warning('Panth PageBuilderAi: response exceeded max size and was truncated');
                     $bodyStr = substr($bodyStr, 0, self::MAX_RESPONSE_BYTES);
                 }
-                // Validate MIME type: must be JSON for AI provider responses.
+
                 if ($contentType !== '' && stripos($contentType, 'application/json') === false) {
                     $this->logger->warning('Panth PageBuilderAi: unexpected response content-type: ' . $contentType);
                 }
@@ -388,12 +336,6 @@ abstract class AbstractHttpAdapter
         return ['status' => $lastStatus, 'body' => $lastBody];
     }
 
-    /**
-     * Persist the raw outbound + inbound payloads to the request log.
-     *
-     * Fire-and-forget: the logger swallows its own errors, so no code path
-     * that writes to an AI provider can silently skip being audited.
-     */
     private function auditLog(array $payload, int $status, string $body, int $latencyMs): void
     {
         try {
@@ -402,8 +344,6 @@ abstract class AbstractHttpAdapter
             return;
         }
 
-        // Best-effort extraction of the textual prompt from the outbound payload
-        // (OpenAI: messages[].content; Claude: messages[].content).
         $prompt = '';
         $imageCount = 0;
         foreach (($payload['messages'] ?? []) as $msg) {
@@ -426,7 +366,6 @@ abstract class AbstractHttpAdapter
             $prompt = $payload['system'] . "\n\n" . $prompt;
         }
 
-        // Extract the model's text response for the "response" column.
         $response = $body;
         $tokens = null;
         $decoded = json_decode($body, true);
@@ -462,9 +401,6 @@ abstract class AbstractHttpAdapter
         ]);
     }
 
-    /**
-     * Heuristic confidence based on length stability.
-     */
     protected function heuristicConfidence(string $title, string $description): float
     {
         $tLen = mb_strlen($title);
@@ -479,9 +415,6 @@ abstract class AbstractHttpAdapter
         return hash('sha256', $provider . '|' . $model . '|' . $prompt);
     }
 
-    /**
-     * @param array<string,mixed> $context
-     */
     protected function buildPrompt(array $context): string
     {
         $entityType = (string)($context['entity_type'] ?? 'product');
@@ -529,10 +462,6 @@ abstract class AbstractHttpAdapter
         return $this->appendKnowledgeGuidelines($prompt, $entityType, $requestedFields);
     }
 
-    /**
-     * @param array<string,mixed> $attrs
-     * @param string[] $requestedFields
-     */
     private function buildMultiFieldPrompt(
         string $entityType,
         array $attrs,
@@ -592,9 +521,6 @@ abstract class AbstractHttpAdapter
         return implode("\n", $lines);
     }
 
-    /**
-     * @param array<string,mixed> $context
-     */
     private function loadPromptTemplate(string $entityType, array $context): ?string
     {
         try {
@@ -643,9 +569,6 @@ abstract class AbstractHttpAdapter
         }
     }
 
-    /**
-     * @param array<string,mixed> $attrs
-     */
     private function renderPromptTemplate(
         string $template,
         array $attrs,
@@ -668,9 +591,6 @@ abstract class AbstractHttpAdapter
         return str_replace(array_keys($placeholders), array_values($placeholders), $template);
     }
 
-    /**
-     * @param string[] $requestedFields
-     */
     private function appendKnowledgeGuidelines(string $prompt, string $entityType, array $requestedFields = []): string
     {
         try {
@@ -736,10 +656,6 @@ abstract class AbstractHttpAdapter
         }
     }
 
-    /**
-     * @param string[] $requestedFields
-     * @return array<int, array<string, string>>
-     */
     private function loadKnowledgeEntries(string $entityType, array $requestedFields = []): array
     {
         $connection = $this->resource->getConnection();
@@ -830,11 +746,6 @@ abstract class AbstractHttpAdapter
         return $result;
     }
 
-    /**
-     * Parse JSON reply from AI. Supports both legacy two-field and multi-field responses.
-     *
-     * @return array<string,string>
-     */
     protected function parseJsonReply(string $text): array
     {
         $text = trim($text);

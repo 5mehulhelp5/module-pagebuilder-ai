@@ -14,17 +14,10 @@ use Panth\PageBuilderAi\Api\AiGeneratorInterface;
 use Panth\PageBuilderAi\Model\Score\ContextBuilder;
 use Psr\Log\LoggerInterface;
 
-/**
- * AJAX controller for on-page AI meta / content generation.
- *
- * Ported from Panth\AdvancedSEO\Controller\Adminhtml\AiGenerate\Generate.
- * Enforces the new Panth_PageBuilderAi::ai_generate ACL resource.
- */
 class Generate extends Action implements HttpPostActionInterface, CsrfAwareActionInterface
 {
     public const ADMIN_RESOURCE = 'Panth_PageBuilderAi::ai_generate';
 
-    /** Default fields to generate per entity type */
     private const DEFAULT_FIELDS = [
         'product'      => ['meta_title', 'meta_description', 'meta_keywords', 'og_title', 'og_description', 'short_description'],
         'category'     => ['meta_title', 'meta_description', 'meta_keywords', 'og_title', 'og_description'],
@@ -35,7 +28,6 @@ class Generate extends Action implements HttpPostActionInterface, CsrfAwareActio
         'dynamic_form' => ['description', 'content_above', 'content_below', 'success_message', 'meta_title', 'meta_description', 'meta_keywords'],
     ];
 
-    /** Field-specific prompt suffixes for single-field generation */
     private const FIELD_PROMPT_SUFFIX = [
         'meta_title'        => 'Generate ONLY a meta title (50-60 characters) optimized for search engines.',
         'meta_description'  => 'Generate ONLY a meta description (140-156 characters) with compelling CTA.',

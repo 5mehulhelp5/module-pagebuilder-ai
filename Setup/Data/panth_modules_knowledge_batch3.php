@@ -1,18 +1,5 @@
 <?php
-/**
- * Panth AdvancedSEO AI Knowledge Base - Batch 3
- * Panth Module Integration with CMS Content & SEO
- *
- * Covers: AdvancedCart, CheckoutExtended, CheckoutSuccess, CustomOptions,
- *         LowStockNotification, PriceDropAlert, OrderAttachments, ZipcodeValidation
- *
- * Copyright (c) Panth Infotech. All rights reserved.
- */
-
 return [
-    // =========================================================================
-    // MODULE: AdvancedCart (Panth_AdvancedCart)
-    // =========================================================================
 
     [
         'category' => 'panth_modules',
@@ -60,10 +47,6 @@ return [
         'sort_order' => 4,
     ],
 
-    // =========================================================================
-    // MODULE: CheckoutExtended (Panth_CheckoutExtended)
-    // =========================================================================
-
     [
         'category' => 'panth_modules',
         'subcategory' => 'checkout_extended',
@@ -100,10 +83,6 @@ return [
         'is_active' => 1,
         'sort_order' => 8,
     ],
-
-    // =========================================================================
-    // MODULE: CheckoutSuccess (Panth_CheckoutSuccess)
-    // =========================================================================
 
     [
         'category' => 'panth_modules',
@@ -142,10 +121,6 @@ return [
         'sort_order' => 12,
     ],
 
-    // =========================================================================
-    // MODULE: CustomOptions (Panth_CustomOptions)
-    // =========================================================================
-
     [
         'category' => 'panth_modules',
         'subcategory' => 'custom_options',
@@ -173,10 +148,6 @@ return [
         'is_active' => 1,
         'sort_order' => 15,
     ],
-
-    // =========================================================================
-    // MODULE: LowStockNotification (Panth_LowStockNotification)
-    // =========================================================================
 
     [
         'category' => 'panth_modules',
@@ -215,10 +186,6 @@ return [
         'sort_order' => 19,
     ],
 
-    // =========================================================================
-    // MODULE: PriceDropAlert (Panth_PriceDropAlert)
-    // =========================================================================
-
     [
         'category' => 'panth_modules',
         'subcategory' => 'price_drop_alert',
@@ -256,10 +223,6 @@ return [
         'sort_order' => 23,
     ],
 
-    // =========================================================================
-    // MODULE: OrderAttachments (Panth_OrderAttachments)
-    // =========================================================================
-
     [
         'category' => 'panth_modules',
         'subcategory' => 'order_attachments',
@@ -296,10 +259,6 @@ return [
         'is_active' => 1,
         'sort_order' => 27,
     ],
-
-    // =========================================================================
-    // MODULE: ZipcodeValidation (Panth_ZipcodeValidation)
-    // =========================================================================
 
     [
         'category' => 'panth_modules',

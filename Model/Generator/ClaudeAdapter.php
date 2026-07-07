@@ -5,9 +5,6 @@ namespace Panth\PageBuilderAi\Model\Generator;
 
 use Panth\PageBuilderAi\Api\AiGeneratorInterface;
 
-/**
- * Anthropic Claude content generator.
- */
 class ClaudeAdapter extends AbstractHttpAdapter implements AiGeneratorInterface
 {
     public function getProvider(): string
@@ -20,10 +17,6 @@ class ClaudeAdapter extends AbstractHttpAdapter implements AiGeneratorInterface
     private const API_VERSION = '2023-06-01';
     private const DEFAULT_MAX_TOKENS = 600;
 
-    /**
-     * @param array<string,mixed> $context
-     * @return array<string,mixed>
-     */
     public function generate(array $context, array $fields = [], array $options = []): array
     {
         $apiKey = $this->getApiKey('panth_pagebuilderai/ai/claude_api_key');
@@ -134,8 +127,6 @@ class ClaudeAdapter extends AbstractHttpAdapter implements AiGeneratorInterface
         $title = (string)($parsed['title'] ?? $parsed['meta_title'] ?? '');
         $description = (string)($parsed['description'] ?? $parsed['meta_description'] ?? '');
         if ($title === '' && $description === '') {
-            // Fall back to returning raw content so PageBuilder full-page generations
-            // (which don't always respond as JSON) can still surface content.
             return ['title' => '', 'description' => '', 'content' => trim($text), 'confidence' => 0.0];
         }
 

@@ -17,15 +17,6 @@ use Panth\PageBuilderAi\Model\GenerationJob;
 use Panth\PageBuilderAi\Model\ResourceModel\GenerationJob\Grid\CollectionFactory as JobCollectionFactory;
 use Psr\Log\LoggerInterface;
 
-/**
- * Approves a batch of draft generation jobs, copying draft_title/description
- * onto the underlying entity's meta fields.
- *
- * Accepts ids from three places, in priority order:
- *   1. Magento UI mass-action via `Filter::getCollection()` (selected, excluded, filters, namespace).
- *   2. Flat `selected[]` POST — legacy / non-UI grid callers.
- *   3. Flat `job_ids[]` POST — direct API / CLI callers.
- */
 class ApproveBatch extends AbstractAction implements HttpPostActionInterface
 {
     public const ADMIN_RESOURCE = 'Panth_PageBuilderAi::ai_jobs';
@@ -142,12 +133,8 @@ class ApproveBatch extends AbstractAction implements HttpPostActionInterface
         return $resultRedirect->setPath('panth_pagebuilderai/aiSettings/jobs');
     }
 
-    /**
-     * @return int[]
-     */
     private function resolveJobIds(): array
     {
-        // 1) Magento UI mass-action — uses Filter to merge selected/excluded/filters into a collection.
         try {
             $collection = $this->filter->getCollection($this->jobCollectionFactory->create());
             $ids = array_map('intval', (array) $collection->getAllIds());
@@ -156,17 +143,14 @@ class ApproveBatch extends AbstractAction implements HttpPostActionInterface
                 return array_values($ids);
             }
         } catch (\Throwable) {
-            // Filter throws if the request doesn't carry UI mass-action params — fall through.
         }
 
-        // 2) Flat `selected[]` fallback.
         $selected = (array) $this->getRequest()->getParam('selected', []);
         $ids = array_filter(array_map('intval', $selected));
         if ($ids) {
             return array_values($ids);
         }
 
-        // 3) Flat `job_ids[]` fallback (direct API callers, CLI).
         $jobIds = (array) $this->getRequest()->getParam('job_ids', []);
         $ids = array_filter(array_map('intval', $jobIds));
         return array_values($ids);

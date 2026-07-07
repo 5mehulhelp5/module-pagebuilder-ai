@@ -5,11 +5,6 @@ namespace Panth\PageBuilderAi\Plugin\ThirdParty;
 
 use Panth\PageBuilderAi\Model\Admin\AiButtonRenderer;
 
-/**
- * Adds AI generate buttons to the Testimonial edit form.
- *
- * Targets: Panth\Testimonials\Model\Testimonial\DataProvider (afterGetMeta).
- */
 class TestimonialAiPlugin
 {
     public function __construct(
@@ -17,11 +12,6 @@ class TestimonialAiPlugin
     ) {
     }
 
-    /**
-     * @param mixed               $subject
-     * @param array<string,mixed> $result
-     * @return array<string,mixed>
-     */
     public function afterGetMeta($subject, array $result): array
     {
         if (!class_exists(\Panth\Testimonials\Model\Testimonial::class, false)

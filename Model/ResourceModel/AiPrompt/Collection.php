@@ -14,9 +14,6 @@ class Collection extends AbstractCollection implements SearchResultInterface
 {
     protected $_idFieldName = 'prompt_id';
 
-    /**
-     * @var AggregationInterface|null
-     */
     private $aggregations;
 
     protected function _construct(): void

@@ -5,14 +5,6 @@ namespace Panth\PageBuilderAi\Plugin\ThirdParty;
 
 use Panth\PageBuilderAi\Model\Admin\AiButtonRenderer;
 
-/**
- * Adds AI generate buttons to the BannerSlider Slide edit form.
- *
- * Targets: Panth\BannerSlider\Ui\DataProvider\SlideFormDataProvider (afterGetMeta).
- * SAFE: declaration is conditional on the target class existing; Magento
- * silently skips plugin declarations for missing target classes, and the
- * class_exists() check inside is a further safety net.
- */
 class BannerSlideAiPlugin
 {
     public function __construct(
@@ -20,11 +12,6 @@ class BannerSlideAiPlugin
     ) {
     }
 
-    /**
-     * @param mixed               $subject
-     * @param array<string,mixed> $result
-     * @return array<string,mixed>
-     */
     public function afterGetMeta($subject, array $result): array
     {
         if (!class_exists(\Panth\BannerSlider\Model\Slide::class, false)

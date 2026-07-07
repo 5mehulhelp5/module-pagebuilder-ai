@@ -1,24 +1,6 @@
 <?php
-/**
- * Panth Modules AI Knowledge Base - Batch 2
- *
- * Covers: QuickView, ProductTabs, DynamicForms, AdvancedContactUs,
- *         WhatsApp, LiveActivity, Footer, ThemeCustomizer
- *
- * Usage: Load this file and insert entries into panth_seo_ai_knowledge table.
- *
- * @return array<int, array{category: string, subcategory: string, title: string, content: string, tags: string, is_active: int, sort_order: int}>
- */
-
 $entries = [];
-$sort = 1000; // Offset to avoid collision with batch 1
-
-// =====================================================================
-// MODULE: Panth_QuickView
-// Block: Panth\QuickView\Block\QuickView (modal), Panth\QuickView\Block\ProductViewTracker
-// Helper: Panth\QuickView\Helper\Data
-// Config section: panth_quickview
-// =====================================================================
+$sort = 1000;
 
 $entries[] = [
     'category' => 'panth_module',
@@ -79,14 +61,6 @@ $entries[] = [
     'is_active' => 1,
     'sort_order' => $sort++,
 ];
-
-// =====================================================================
-// MODULE: Panth_ProductTabs
-// Widget: panth_product_tabs (Panth\ProductTabs\Block\Widget\Tabs)
-// Block: Panth\ProductTabs\Block\Tabs
-// Helper: Panth\ProductTabs\Helper\Data
-// Config section: panth_producttabs
-// =====================================================================
 
 $entries[] = [
     'category' => 'panth_module',
@@ -158,12 +132,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =====================================================================
-// MODULE: Panth_DynamicForms
-// Widget: panth_dynamic_form (Panth\DynamicForms\Block\Widget\DynamicForm)
-// Config section: panth_dynamicforms
-// =====================================================================
-
 $entries[] = [
     'category' => 'panth_module',
     'subcategory' => 'dynamicforms',
@@ -234,12 +202,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =====================================================================
-// MODULE: Panth_AdvancedContactUs
-// ViewModel: Panth\AdvancedContactUs\ViewModel\ContactForm
-// Config section: panth_advancedcontact
-// =====================================================================
-
 $entries[] = [
     'category' => 'panth_module',
     'subcategory' => 'advancedcontactus',
@@ -300,14 +262,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =====================================================================
-// MODULE: Panth_WhatsApp
-// Helper: Panth\WhatsApp\Helper\Data
-// ViewModels: Panth\WhatsApp\ViewModel\FloatButton, Product, Category
-// Blocks: Panth\WhatsApp\Block\Product\Button, Category\Banner
-// Config section: panth_whatsapp
-// =====================================================================
-
 $entries[] = [
     'category' => 'panth_module',
     'subcategory' => 'whatsapp',
@@ -358,13 +312,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =====================================================================
-// MODULE: Panth_LiveActivity
-// Block: Panth\LiveActivity\Block\Activity
-// Helper: Panth\LiveActivity\Helper\Config
-// Config section: live_activity
-// =====================================================================
-
 $entries[] = [
     'category' => 'panth_module',
     'subcategory' => 'liveactivity',
@@ -414,13 +361,6 @@ $entries[] = [
     'is_active' => 1,
     'sort_order' => $sort++,
 ];
-
-// =====================================================================
-// MODULE: Panth_Footer
-// Helper: Panth\Footer\Helper\Data
-// ViewModel: Panth\Footer\ViewModel\FooterData
-// Config section: panth_footer
-// =====================================================================
 
 $entries[] = [
     'category' => 'panth_module',
@@ -482,13 +422,6 @@ $entries[] = [
     'sort_order' => $sort++,
 ];
 
-// =====================================================================
-// MODULE: Panth_ThemeCustomizer
-// Helper: Panth\ThemeCustomizer\Helper\Data
-// Blocks: Panth\ThemeCustomizer\Block\GoogleFonts, CustomCss
-// Config section: theme_customizer, panth_header
-// =====================================================================
-
 $entries[] = [
     'category' => 'panth_module',
     'subcategory' => 'themecustomizer',
@@ -548,10 +481,6 @@ $entries[] = [
     'is_active' => 1,
     'sort_order' => $sort++,
 ];
-
-// =====================================================================
-// CROSS-MODULE: Integration Tips
-// =====================================================================
 
 $entries[] = [
     'category' => 'panth_module',

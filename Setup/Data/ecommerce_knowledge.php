@@ -1,17 +1,5 @@
 <?php
-/**
- * Panth AdvancedSEO - AI Knowledge Base: E-commerce Content Patterns
- *
- * Training data for AI meta/content generation.
- * Each entry teaches the AI how to write effective e-commerce content
- * for products, categories, CMS pages, and industry-specific stores.
- */
-
 return [
-
-    // =========================================================================
-    // PRODUCT DESCRIPTIONS (20 entries)
-    // =========================================================================
 
     [
         'category'    => 'product_descriptions',
@@ -181,11 +169,6 @@ return [
         'tags'        => ['cross-sell', 'upsell', 'aov', 'complementary', 'bundles', 'revenue'],
     ],
 
-
-    // =========================================================================
-    // CATEGORY PAGES (10 entries)
-    // =========================================================================
-
     [
         'category'    => 'category_pages',
         'subcategory' => 'seo_description',
@@ -265,11 +248,6 @@ return [
         'content'     => 'Paginated category pages need a content strategy beyond "Page 2 of Running Shoes." Each paginated page should carry the same core category description (kept above or below the grid) to maintain topical consistency for search engines. Do not strip descriptions from pages 2, 3, and beyond — this creates thin pages. However, also avoid duplicating long-form content across every page; a shortened version (50-100 words) on subsequent pages is sufficient. Use self-referencing canonical tags on each page (page 2 canonicals to itself, not to page 1) so Google can index deep inventory. Implement "Load More" or infinite scroll with caution — ensure that each product has a crawlable URL accessible from the HTML source, not just loaded via JavaScript. Google recommends a "View All" page if your product count is manageable (under 200); this single page carries the most SEO weight. For large catalogs, maintain traditional pagination with clear prev/next links and page-number navigation. Never block paginated URLs in robots.txt — you want search engines to discover products on deeper pages. Monitor crawl stats in Search Console; if pages 3+ are rarely crawled, consider flattening your category structure or improving internal linking to deep pages. The meta title on paginated pages should include the page number: "Running Shoes - Page 2 | Store Name" to avoid duplicate title issues.',
         'tags'        => ['pagination', 'crawling', 'canonical', 'infinite-scroll', 'load-more', 'deep-pages'],
     ],
-
-
-    // =========================================================================
-    // CMS PAGES (10 entries)
-    // =========================================================================
 
     [
         'category'    => 'cms_pages',
@@ -351,11 +329,6 @@ return [
         'tags'        => ['store-locator', 'local-seo', 'location-pages', 'google-business', 'brick-and-mortar', 'schema'],
     ],
 
-
-    // =========================================================================
-    // HOMEPAGE CONTENT (5 entries)
-    // =========================================================================
-
     [
         'category'    => 'homepage_content',
         'subcategory' => 'hero_section',
@@ -395,11 +368,6 @@ return [
         'content'     => 'The newsletter signup block is a value exchange — the visitor gives their email, and you must articulate exactly what they receive. "Sign up for our newsletter" converts at roughly 1%. "Get 15% off your first order + weekly style tips" converts at 5-8%. Lead with the incentive, then name the content value. Structure: Headline (the offer) + Subheadline (what to expect) + Single email field + CTA button. Example: Headline: "15% Off Your First Order." Subheadline: "Plus new arrivals, styling tips, and member-only sales every Thursday." CTA: "Send My Code" (not "Subscribe" — the word "subscribe" triggers commitment anxiety). Place the signup block in the lower third of the homepage or as a timed/exit-intent popup — avoid interrupting the shopping flow immediately on arrival. For the popup variant, delay by at least 10 seconds or 50% scroll depth. Never use a generic "Submit" button — mirror the user\'s motivation in the CTA text: "Get My Discount," "Join the Club," "Send My Free Guide." Address privacy briefly near the form: "We send one email per week. Unsubscribe anytime." This reduces friction. After signup, the confirmation page should immediately deliver the promised code and suggest a category to browse: "Here is your code: WELCOME15. Shop our bestsellers now." Track signup rate by placement (footer vs. popup vs. inline block) and optimize the lowest performer.',
         'tags'        => ['newsletter', 'email-signup', 'lead-capture', 'incentive', 'popup', 'conversion'],
     ],
-
-
-    // =========================================================================
-    // INDUSTRY-SPECIFIC CONTENT (15 entries)
-    // =========================================================================
 
     [
         'category'    => 'industry_specific',

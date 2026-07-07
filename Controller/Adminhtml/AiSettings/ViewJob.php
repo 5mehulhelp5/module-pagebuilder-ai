@@ -8,11 +8,6 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\View\Result\PageFactory;
 use Panth\PageBuilderAi\Controller\Adminhtml\AbstractAction;
 
-/**
- * Detail view for a single AI generation job — shows the full job row plus
- * the entities (products / categories / CMS pages) the job targeted, with
- * names resolved for readability.
- */
 class ViewJob extends AbstractAction
 {
     public const ADMIN_RESOURCE = 'Panth_PageBuilderAi::ai_jobs';
@@ -65,10 +60,6 @@ class ViewJob extends AbstractAction
         return $page;
     }
 
-    /**
-     * @param int[] $ids
-     * @return array<int, array{id:int,name:string,edit_url:string}>
-     */
     private function loadEntityNames(string $entityType, array $ids): array
     {
         if (!$ids) {
@@ -147,10 +138,8 @@ class ViewJob extends AbstractAction
                     break;
             }
         } catch (\Throwable) {
-            // Degrade gracefully — still show ids even if name lookup failed.
         }
 
-        // Preserve original order and fill in any ids that didn't come back from the query.
         $byId = [];
         foreach ($out as $o) {
             $byId[$o['id']] = $o;
