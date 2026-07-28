@@ -60,19 +60,19 @@ Short description: {{short_description}}
 Full description: {{description}}
 
 === OUTPUT CONTRACT ===
-Return ONLY this JSON shape — no prose, no code fences, no leading/trailing
+Return ONLY this JSON shape - no prose, no code fences, no leading/trailing
 characters:
 {"meta_title":"...","meta_description":"..."}
 
 === FIELD RULES ===
-meta_title  (50–60 characters, hard cap 60):
+meta_title  (50-60 characters, hard cap 60):
   • Put the primary product keyword in the first 30 characters.
   • Include the brand once when available.
-  • No ALL CAPS, no emoji, no clickbait ("The Best…"), no brackets/pipes
+  • No ALL CAPS, no emoji, no clickbait ("The Best..."), no brackets/pipes
     unless semantically meaningful.
   • Must read naturally if spoken aloud.
 
-meta_description (140–156 characters, hard cap 160):
+meta_description (140-156 characters, hard cap 160):
   • Lead with the core buyer benefit (what the product does for the user).
   • Include one concrete differentiator (material, size, warranty, speed).
   • End with a soft CTA ("Shop now", "Order today", "See the collection").
@@ -88,7 +88,7 @@ P,
 
             'Default Category Meta' => <<<'P'
 You are an SEO strategist writing Magento 2 category meta fields. Output is
-STRICT JSON — a downstream parser will reject anything else.
+STRICT JSON - a downstream parser will reject anything else.
 
 === CATEGORY CONTEXT ===
 Name: {{name}}
@@ -101,12 +101,12 @@ Return ONLY this JSON, no code fences or prose:
 {"meta_title":"...","meta_description":"..."}
 
 === RULES ===
-meta_title (50–60 chars):
-  • Pattern: "<Category> — <benefit/range> | <Store>" or similar.
+meta_title (50-60 chars):
+  • Pattern: "<Category> - <benefit/range> | <Store>" or similar.
   • Lead with the category keyword, not the store.
   • Prefer commercial-intent verbs (Shop, Explore, Discover).
 
-meta_description (140–156 chars):
+meta_description (140-156 chars):
   • Signal range ("100+", "all sizes", "top brands") when honest.
   • One trust element (free shipping, easy returns, expert support, warranty).
   • Close with a CTA tuned to browse intent, not click-bait.
@@ -118,7 +118,7 @@ P,
 
             'Default CMS Meta' => <<<'P'
 You are writing SEO meta for a Magento 2 CMS page. The parser expects STRICT
-JSON — never any HTML, markdown, or extra prose.
+JSON - never any HTML, markdown, or extra prose.
 
 === PAGE CONTEXT ===
 Title: {{title}}
@@ -131,22 +131,22 @@ Return ONLY this JSON, no code fences:
 {"meta_title":"...","meta_description":"..."}
 
 === RULES ===
-meta_title (50–60 chars):
+meta_title (50-60 chars):
   • Match search intent of the page (informational / navigational / transactional).
   • Primary keyword in the first 30 chars.
   • No clickbait. No emoji. No ALL CAPS.
   • If the page is support/policy (e.g. Shipping, Returns, Privacy), phrase the
     title as the user's actual query (e.g. "Shipping Policy & Delivery Times").
 
-meta_description (140–156 chars):
+meta_description (140-156 chars):
   • Lead with what the visitor will learn or get from the page.
   • One concrete data point when available (timeframes, prices, eligibility).
-  • Use second-person voice when natural ("Learn how you can…").
+  • Use second-person voice when natural ("Learn how you can...").
   • Close with a soft next step ("Read the full policy.", "See all options.").
 
 === FORBIDDEN ===
 HTML tags, Markdown, emoji, invented facts not in the page context, any form
-of <div> / <p> / <br> / <span> — downstream input fields will render literal
+of <div> / <p> / <br> / <span> - downstream input fields will render literal
 tags as text. Keep each value on a single line.
 P,
 
@@ -160,8 +160,8 @@ Description: {{description}}
 URL: {{url}}
 
 Return EXACTLY: {"meta_title":"...","meta_description":"..."}
-  • meta_title: 50–60 chars, primary keyword early, no emoji, no HTML.
-  • meta_description: 140–156 chars, 1 concrete benefit + 1 call-to-action.
+  • meta_title: 50-60 chars, primary keyword early, no emoji, no HTML.
+  • meta_description: 140-156 chars, 1 concrete benefit + 1 call-to-action.
   • No code fences. No leading sentence. No trailing notes.
 P,
 
@@ -178,7 +178,7 @@ Audience: {{audience}}
 Key message: {{description}}
 
 === CONTRACT ===
-Return ONLY HTML — no markdown, no code fences, no explanations. Every top-
+Return ONLY HTML - no markdown, no code fences, no explanations. Every top-
 level element must be a PageBuilder row:
 
   <div data-content-type="row" data-appearance="contained" data-element="main">
@@ -192,16 +192,16 @@ level element must be a PageBuilder row:
   </div>
 
 Allowed inner content types (one per block):
-  <h2 data-content-type="heading" data-element="main">…</h2>
-  <div data-content-type="text" data-appearance="default" data-element="main"><p>…</p></div>
+  <h2 data-content-type="heading" data-element="main">...</h2>
+  <div data-content-type="text" data-appearance="default" data-element="main"><p>...</p></div>
   <div data-content-type="buttons" data-appearance="inline" data-same-width="false" data-element="main">
     <div data-content-type="button-item" data-appearance="default" data-element="main">
-      <a href="/…" data-element="link" class="pagebuilder-button-primary">Label</a>
+      <a href="/..." data-element="link" class="pagebuilder-button-primary">Label</a>
     </div>
   </div>
   <div data-content-type="divider" data-appearance="default" data-element="main"><hr data-element="line"/></div>
   <figure data-content-type="image" data-appearance="full-width" data-element="main">
-    <img src="{{media-url}}" alt="…" data-element="desktop_image"/>
+    <img src="{{media-url}}" alt="..." data-element="desktop_image"/>
   </figure>
 
 === SEO / STRUCTURE RULES (2026) ===
@@ -241,7 +241,7 @@ Return ONLY HTML. Wrap the whole block in a single PageBuilder row:
         <!-- Five Q/A pairs. For EACH pair: -->
         <h3 data-content-type="heading" data-element="main">Question text?</h3>
         <div data-content-type="text" data-appearance="default" data-element="main">
-          <p>Answer in 2–4 sentences, factual, no marketing fluff.</p>
+          <p>Answer in 2-4 sentences, factual, no marketing fluff.</p>
         </div>
         <!-- repeat h3 + text for the other 4 pairs -->
       </div>
@@ -251,7 +251,7 @@ Return ONLY HTML. Wrap the whole block in a single PageBuilder row:
 === RULES ===
   • Exactly 5 question/answer pairs.
   • Questions must read like real user queries (no marketing rhetoric).
-  • Answers: 2–4 short sentences; concrete facts only; no emoji.
+  • Answers: 2-4 short sentences; concrete facts only; no emoji.
   • No nested content types inside the text blocks other than <p>, <strong>,
     <em>, <a>.
   • No <script>, no inline handlers, no external stylesheets.

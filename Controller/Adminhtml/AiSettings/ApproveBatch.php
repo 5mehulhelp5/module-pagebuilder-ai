@@ -124,7 +124,7 @@ class ApproveBatch extends AbstractAction implements HttpPostActionInterface
         }
         if ($skippedNotDraft > 0) {
             $this->messageManager->addNoticeMessage(
-                __('%1 job(s) were skipped because they are not in "draft" status yet — only jobs whose results are ready for review can be approved.', $skippedNotDraft)
+                __('%1 job(s) were skipped because they are not in "draft" status yet - only jobs whose results are ready for review can be approved.', $skippedNotDraft)
             );
         }
         if ($approved === 0 && $skippedNotDraft === 0) {

@@ -69,7 +69,7 @@
                 <field id="cache_ttl" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Response Cache TTL (seconds)</label>
                     <validate>validate-digits</validate>
-                    <comment><![CDATA[How long to cache AI responses to avoid re-generating for the same prompt. Default: 2592000 (30 days). Set to 0 to disable caching (not recommended — increases API costs).]]></comment>
+                    <comment><![CDATA[How long to cache AI responses to avoid re-generating for the same prompt. Default: 2592000 (30 days). Set to 0 to disable caching (not recommended - increases API costs).]]></comment>
                 </field>
                 <field id="tone" translate="label comment" type="text" sortOrder="80" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Writing Tone</label>

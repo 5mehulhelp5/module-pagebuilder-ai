@@ -81,7 +81,7 @@ $formKey     = $block->getFormKey();
         <div class="panth-ai-card">
             <h3>
                 <?= $block->escapeHtml(__('Bulk AI Generation')) ?>
-                <span class="panth-ai-badge"><?= $block->escapeHtml(__('Queued → Cron')) ?></span>
+                <span class="panth-ai-badge"><?= $block->escapeHtml(__('Queued for Cron')) ?></span>
             </h3>
             <p class="panth-ai-muted" style="margin-bottom:12px;">
                 <?= $block->escapeHtml(__('Queues a batch job that the message-queue consumer will process asynchronously. Results appear in the Generation Jobs grid with status "draft" so you can review before approving.')) ?>

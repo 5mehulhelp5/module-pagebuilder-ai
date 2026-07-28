@@ -75,7 +75,7 @@ class AiService
             'max_tokens' => $this->config->getMaxTokens(),
             'temperature' => $this->config->getTemperature(),
             'messages' => [
-                ['role' => 'system', 'content' => 'You are a professional web content writer. Return only the requested content — no JSON wrapping, no markdown code fences, no extra commentary.'],
+                ['role' => 'system', 'content' => 'You are a professional web content writer. Return only the requested content - no JSON wrapping, no markdown code fences, no extra commentary.'],
                 ['role' => 'user', 'content' => $userContent],
             ],
         ];
@@ -133,7 +133,7 @@ class AiService
             'model' => $this->config->getClaudeModel(),
             'max_tokens' => $this->config->getMaxTokens(),
             'temperature' => $this->config->getTemperature(),
-            'system' => 'You are a professional web content writer. Return only the requested content — no JSON wrapping, no markdown code fences, no extra commentary.',
+            'system' => 'You are a professional web content writer. Return only the requested content - no JSON wrapping, no markdown code fences, no extra commentary.',
             'messages' => [
                 ['role' => 'user', 'content' => $userContent],
             ],

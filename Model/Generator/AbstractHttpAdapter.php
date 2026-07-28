@@ -445,7 +445,7 @@ abstract class AbstractHttpAdapter
 
         $lines = [];
         $lines[] = 'You are an SEO expert. Generate a meta title and meta description for the following ' . $entityType . '.';
-        $lines[] = 'Title must be 50–60 characters, description 140–156 characters.';
+        $lines[] = 'Title must be 50-60 characters, description 140-156 characters.';
         $lines[] = 'Return strict JSON: {"title":"...","description":"..."}';
         $lines[] = '';
         foreach ($attrs as $k => $v) {

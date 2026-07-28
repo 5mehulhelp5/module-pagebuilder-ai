@@ -100,7 +100,7 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
             $fullPrompt = $prompt;
         } elseif ($requestedFormat === 'plain') {
             $fullPrompt = "You are filling a single admin form input. Output ONLY the bare plain-text "
-                . "value for that field — no JSON, no HTML, no markdown, no surrounding quotes, "
+                . "value for that field - no JSON, no HTML, no markdown, no surrounding quotes, "
                 . "no labels, no explanation. If you cannot fulfil the request, output nothing. "
                 . "No emojis.\n\n=== FIELD BRIEF ===\n" . $prompt;
         } elseif ($requestedFormat === 'json') {
@@ -389,7 +389,7 @@ class Index extends Action implements HttpPostActionInterface, CsrfAwareActionIn
         return <<<'PROMPT'
 You are generating content for Magento 2 PageBuilder. Every fragment MUST use
 Magento PageBuilder's HTML structure so the admin can continue editing the
-output with drag-and-drop. Return ONLY the HTML — no explanations, no Markdown,
+output with drag-and-drop. Return ONLY the HTML - no explanations, no Markdown,
 no <html>/<head>/<body> wrappers.
 
 === OUTPUT ORDER (CRITICAL) ===
@@ -398,7 +398,7 @@ Emit visible content (headings, paragraphs, buttons) BEFORE any decorative
 styling. A page with only a <style> block and no content types is invalid
 and will be rejected. Every response MUST start with a
 <div data-content-type="row" ...> containing real, visible content types.
-If you run out of room, truncating extra rows is fine — but the first row
+If you run out of room, truncating extra rows is fine - but the first row
 with real content MUST be complete.
 
 === NO CUSTOM CSS ===
@@ -406,11 +406,11 @@ with real content MUST be complete.
 Do NOT output <style> tags. Do NOT define CSS classes. Do NOT use class
 attributes beyond PageBuilder's own (`pagebuilder-button-primary`,
 `pagebuilder-button-secondary`). Do NOT invent class names like
-`.hero-section`, `.feature-card`, `.container`, etc. — PageBuilder does not
+`.hero-section`, `.feature-card`, `.container`, etc. - PageBuilder does not
 render them and the token budget is limited. The theme already styles
 PageBuilder content types; your job is structure, not aesthetics.
 
-If you need layout / spacing, use minimal inline `style="…"` attributes
+If you need layout / spacing, use minimal inline `style="..."` attributes
 ONLY on the attributes PageBuilder itself emits (e.g. the column's
 `justify-content`, `display`, `flex-direction`). Do not add decorative
 inline styles (gradients, box-shadows, custom colours).
@@ -447,7 +447,7 @@ Inside a column you may only use these content types (one per block):
         </a>
       </div>
     </div>
-    (The <span data-element="link_text"> wrapper is REQUIRED — the storefront
+    (The <span data-element="link_text"> wrapper is REQUIRED - the storefront
     theme only renders button labels that are inside it. A raw <a>Label</a>
     prints empty pills.)
 
@@ -456,23 +456,23 @@ Inside a column you may only use these content types (one per block):
       <hr data-element="line"/>
     </div>
 
-  Image — DO NOT EMIT:
+  Image - DO NOT EMIT:
     Do NOT output <figure data-content-type="image"> blocks. You cannot
-    invent a working media path (Magento resolves `{{media url=…}}` against
+    invent a working media path (Magento resolves `{{media url=...}}` against
     real files in pub/media, and guessed filenames produce 404 images on
     the storefront). If the user wants an image, leave a placeholder text
     block (e.g. "[Add product image here]") so the admin can drop one in
     via PageBuilder's built-in image upload UI. Reference images attached
-    to the request are CONTEXT for your description — never link to them.
+    to the request are CONTEXT for your description - never link to them.
 
   Arbitrary HTML (for complex layouts that don't map to the above):
     <div data-content-type="html" data-appearance="default" data-element="main">
-      <!-- any custom HTML — still no <style> tags, still no custom classes -->
+      <!-- any custom HTML - still no <style> tags, still no custom classes -->
     </div>
 
 === RULES ===
 
-1. Start output with a <div data-content-type="row" ...> — never with raw
+1. Start output with a <div data-content-type="row" ...> - never with raw
    body content, and never with a <style> block.
 2. Use semantic headings <h1>-<h6> wrapped in the heading content type.
 3. Wrap every run of paragraphs / lists in a single text content type.
@@ -483,15 +483,15 @@ Inside a column you may only use these content types (one per block):
    `pagebuilder-button-secondary` (on the <a> inside a button-item). No
    other class attributes anywhere.
 6. Every button label MUST be wrapped in
-   `<span data-element="link_text">…</span>` — the frontend theme hides
+   `<span data-element="link_text">...</span>` - the frontend theme hides
    raw <a>text</a> content, leaving blank button shapes.
-7. NEVER emit <img> tags or {{media url=…}} directives. You do not know
+7. NEVER emit <img> tags or {{media url=...}} directives. You do not know
    which media files exist on this store; use a text placeholder instead
    and let the admin drop in a real image.
 8. Keep content accessible: heading hierarchy, descriptive link labels.
 9. All href values must be relative paths or https:// URLs. No javascript:,
    data:, vbscript:, or file: schemes.
-10. For long-form content, break into multiple row blocks — each row is its
+10. For long-form content, break into multiple row blocks - each row is its
     own editable section in PageBuilder.
 
 If the user's prompt cannot be fulfilled safely within these rules, output

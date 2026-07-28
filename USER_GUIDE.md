@@ -1,4 +1,4 @@
-# Panth PageBuilder AI — User Guide
+# Panth PageBuilder AI - User Guide
 
 This guide walks a Magento store administrator through every feature
 of the Panth PageBuilder AI extension. No coding required.
@@ -162,7 +162,7 @@ Templates are sorted with default templates first, then by sort order.
 | "Error: Unknown error" after clicking Generate | AI backend returned an error | Check `var/log/system.log` for details. Common causes: invalid API key, rate limiting, provider outage |
 | Generated content not appearing in editor | PageBuilder stage not found | Try switching to the WYSIWYG editor view and back to PageBuilder |
 | Field-level AI button missing on some fields | Field appeared before the observer fired | Close and reopen the edit panel; the polling interval is 2 seconds |
-| Extension causes DI compile error | Should not happen — soft dependency pattern | Ensure you are running `setup:di:compile` after `setup:upgrade` |
+| Extension causes DI compile error | Should not happen - soft dependency pattern | Ensure you are running `setup:di:compile` after `setup:upgrade` |
 
 ---
 

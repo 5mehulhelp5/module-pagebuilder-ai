@@ -31,7 +31,7 @@
                     <resource id="Panth_PageBuilderAi::ai_request_logs" title="AI Request Logs" sortOrder="50"/>
                 </resource>
 
-                <!-- Legacy standalone resource — still used by Controller\Adminhtml\Generate\Index. -->
+                <!-- Legacy standalone resource - still used by Controller\Adminhtml\Generate\Index. -->
                 <resource id="Panth_PageBuilderAi::generate" title="PageBuilder AI Generate" sortOrder="95"/>
             </resource>
         </resources>

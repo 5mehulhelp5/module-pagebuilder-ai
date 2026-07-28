@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!--
-    Panth PageBuilder AI — schema.
+    Panth PageBuilder AI - schema.
 
     Table names are intentionally kept under the legacy `panth_seo_*` prefix
     so installations upgrading from Panth_AdvancedSEO do not need to migrate
-    data — the rows are simply taken over by this module.
+    data - the rows are simply taken over by this module.
 -->
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">

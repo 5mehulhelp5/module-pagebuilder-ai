@@ -388,7 +388,7 @@ function panthSeoAiGenerateCmsPage(btn) {
         entity_id: entityId,
         store_id: storeId,
         // "Generate All Fields" uses the default CMS meta prompt which asks for a
-        // {"meta_title":"…","meta_description":"…"} JSON pack.
+        // {"meta_title":"...","meta_description":"..."} JSON pack.
         output_format: 'json'
     };
     if (promptText && promptText.value.trim()) {

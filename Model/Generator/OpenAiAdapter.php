@@ -42,7 +42,7 @@ class OpenAiAdapter extends AbstractHttpAdapter implements AiGeneratorInterface
         $maxTokens = $this->getMaxTokens(self::DEFAULT_MAX_TOKENS);
         $estimate = $maxTokens * 2;
         if ($budget <= 0) {
-            $this->logger->warning('Panth PageBuilderAi: OpenAI request rejected — monthly token budget not configured (0).');
+            $this->logger->warning('Panth PageBuilderAi: OpenAI request rejected - monthly token budget not configured (0).');
             return ['title' => '', 'description' => '', 'confidence' => 0.0, 'error' => 'budget_not_configured'];
         }
         if (!$this->reserveBudget(self::PROVIDER, $estimate, $budget)) {
